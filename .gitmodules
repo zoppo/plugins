@@ -3,4 +3,7 @@
 	url = git://github.com/zoppo/plugin-example.git
 [submodule "completion/external"]
 	path = completion/external
-	url = git://github.com/zsh-users/zsh-completions.git
+  url = git://github.com/zsh-users/zsh-completions.git
+[submodule "syntax-highlight/external"]
+	path = syntax-highlight/external
+	url = git://github.com/zsh-users/zsh-syntax-highlighting.git
