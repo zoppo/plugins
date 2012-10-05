@@ -6,6 +6,7 @@ functions:add-relative 'external/src'
 autoload -Uz compinit && compinit -i
 
 # Options {{{
+typeset -a completion_options
 zdefault -a ':zoppo:plugin:completion' options completion_options \
   'complete-in-word' 'always-to-end' 'path-dirs' 'auto-menu' 'auto-list' 'auto-param-slash' \
   'no-menu-complete' 'no-flow-control'
@@ -21,7 +22,7 @@ for option in ${completion_options[*]}; do
     fi
   fi
 done
-unset completion_options
+unset completion_options option
 
 zdefault -s ':zoppo:plugin:completion' wordchars WORDCHARS '*?_-.[]~&;!#$%^(){}<>'
 #}}}
