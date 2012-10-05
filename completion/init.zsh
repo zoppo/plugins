@@ -1,4 +1,4 @@
-if terminal:dumb; then
+if terminal:is-dumb; then
   return 1
 fi
 
