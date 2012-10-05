@@ -6,17 +6,22 @@ functions:add-relative 'external/src'
 autoload -Uz compinit && compinit -i
 
 # Options {{{
-zdefault ':zoppo:plugin:completion' options options \
-  'complete-in-word' 'always-to-end' 'path-dirs' 'auto-menu' 'auto-list' 'auto-param-slash' 'no-menu-complete' 'no-flow-control'
+zdefault -a ':zoppo:plugin:completion' options completion_options \
+  'complete-in-word' 'always-to-end' 'path-dirs' 'auto-menu' 'auto-list' 'auto-param-slash' \
+  'no-menu-complete' 'no-flow-control'
 
-for option in ${options[*]}; do
+for option in ${completion_options[*]}; do
   if [[ "$option" =~ "^no-" ]]; then
-    unsetopt "${${${option#no-}//-/_}:u}"
+    if [ -n "$(unsetopt "${${${option#no-}//-/_}:u}" 2>&1)" ]; then
+      print "completion: ${option#no-} not found: could not disable"
+    fi
   else
-    setopt "${${option//-/_}:u}"
+    if [ -n "$(setopt "${${option//-/_}:u}" 2>&1)" ]; then
+      print "completion: $option not found: could not disable"
+    fi
   fi
 done
-unset options
+unset completion_options
 
 zdefault -s ':zoppo:plugin:completion' wordchars WORDCHARS '*?_-.[]~&;!#$%^(){}<>'
 #}}}
