@@ -1,5 +1,4 @@
-zdefault -s ':zoppo:plugin:rvm' path 'zoppo_rvm_path' \
-  "${HOME}/.rvm/scripts/rvm"
+zdefault -s ':zoppo:plugin:rvm' path zoppo_rvm_path "${HOME}/.rvm/scripts/rvm"
 
 [[ -s "$zoppo_rvm_path" ]] && source "$zoppo_rvm_path"
 

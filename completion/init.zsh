@@ -18,8 +18,7 @@ for option in ${options[*]}; do
 done
 unset options
 
-zdefault -s ':zoppo:plugin:completion' wordchars WORDCHARS \
-  '*?_-.[]~&;!#$%^(){}<>'
+zdefault -s ':zoppo:plugin:completion' wordchars WORDCHARS '*?_-.[]~&;!#$%^(){}<>'
 #}}}
 
 # Styles {{{
