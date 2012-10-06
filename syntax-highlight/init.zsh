@@ -1,8 +1,8 @@
-zstyle -t ':zoppo:plugin:highlight' color || return 1
+zstyle -t ':zoppo:plugin:syntax-highlight' color || return 1
 
-source "${0:h:a}/external/zsh-syntax-highlighting.zsh"
+source-relative 'external/zsh-syntax-highlighting.zsh'
 
-zdefault -a ':zoppo:plugin:highlight' highlighters ZSH_HIGHLIGHT_HIGHLIGHTERS \
-  'main' 'brackets' 'pattern' 'cursor' 'root'
+zdefault -a ':zoppo:plugin:syntax-highlight' highlighters ZSH_HIGHLIGHT_HIGHLIGHTERS \
+  'main' 'brackets' 'cursor'
 
 # vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}
