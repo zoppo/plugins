@@ -1,9 +1,9 @@
-zdefault -s ':zoppo:history' file      HISTFILE "${ZDOTDIR:-$HOME}/.zhistory"
-zdefault -s ':zoppo:history' max       HISTSIZE 10000
-zdefault -s ':zoppo:history' max-saved SAVEHIST 10000
+zdefault -s ':zoppo:plugin:history' file      HISTFILE "${ZDOTDIR:-$HOME}/.zhistory"
+zdefault -s ':zoppo:plugin:history' max       HISTSIZE 10000
+zdefault -s ':zoppo:plugin:history' max-saved SAVEHIST 10000
 
 typeset -a history_options
-zdefault -a ':zoppo:history' options history_options \
+zdefault -a ':zoppo:plugin:history' options history_options \
   'bang-hist' 'extended-history' 'inc-append-history' 'share-history' 'expire-dups-first' \
   'ignore-dups' 'ignore-all-dups' 'find-no-dups' 'ignore-space' 'save-no-dups' 'verify' 'no-beep'
 
