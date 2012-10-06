@@ -10,9 +10,8 @@ if is-callable 'ssh-agent'; then
     fi
 
     # start ssh-agent and setup the environment
-    rm -f "$env"
-    ssh-agent > "$env"
-    chmod 600 > "$env"
+    ssh-agent >! "$env"
+    chmod 600 "$env"
     source "$env" > /dev/null
 
     # load identities
