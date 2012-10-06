@@ -1,0 +1,8 @@
+(( $+commands[tar] )) || {
+  print "Please install tar first." >&2
+  return 1
+}
+
+tar xvf "$1"
+
+# vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}

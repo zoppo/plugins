@@ -1,0 +1,8 @@
+if (( $+commands[uncompress] )); then
+  uncompress "$1"
+else
+  print "Please install uncompress (in gzip package) first." >&2
+  return 1
+fi
+
+# vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}

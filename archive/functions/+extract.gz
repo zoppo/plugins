@@ -1,0 +1,12 @@
+if (( $+commands[gunzip] )); then
+  gunzip "$1"
+elif (( $+commands[gzip] )); then
+  gzip -d "$1"
+elif (( $+commands[zcat] )); then
+  zcat "$1" >! "${1:r}"
+else
+  print "Please install gzip first." >&2
+  return 1
+fi
+
+# vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}

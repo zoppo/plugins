@@ -1,0 +1,19 @@
+(( $+commands[tar] )) || {
+  print "Please install tar first." >&2
+  return 1
+}
+
+if tar --lzma --help &>/dev/null; then
+  tar --lzma -xvf "$1"
+elif (( $+commands[lzma] )); then
+  lzma -d -c "$1" | tar xvf -
+elif (( $+commands[unlzma] )); then
+  unlzma -c "$1" | tar xvf -
+elif (( $+commands[lzcat] )); then
+  lzcat "$1" | tar xvf -
+else
+  print "Install a lzma-compatible version of tar or lzma." >&2
+  return 1
+fi
+
+# vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}

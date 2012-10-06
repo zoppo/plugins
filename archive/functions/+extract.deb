@@ -1,0 +1,31 @@
+(( $+commands[ar] )) || {
+  print "Please install ar first." >&2
+  return 1
+}
+
+(( $+commands[tar] )) || {
+  print "Please install tar first." >&2
+  return 1
+}
+
+local rdir="${1:t:r}"
+local rpath="${1:a}"
+
+mkdir -p "$rdir/control"
+mkdir -o "$rdir/data"
+
+cd "$rdir"
+ar vx "$rpath" >/dev/null
+
+cd control
+tar xzvf ../control.tar.gz
+
+cd ../data
+tar xzvf ../data.tar.gz
+
+cd ..
+rm *.tar.gz debian-binary
+
+cd ..
+
+# vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}

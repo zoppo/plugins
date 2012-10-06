@@ -1,0 +1,8 @@
+if (( $+commands[unzip] )); then
+  unzip "$1" -d "${1:t:r}"
+else
+  print "Please install unzip first." >&2
+  return 1
+fi
+
+# vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}

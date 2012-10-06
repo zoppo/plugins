@@ -1,0 +1,13 @@
+#compdef extract
+
+local -a extensions
+
+zstyle -a ':zoppo:plugin:archive:extract' extensions extensions
+extensions=(${(@u)extensions})
+sort_by_length extensions
+
+_arguments \
+  '(-r --remove)'{-r,--remove}'[remove archive]' \
+  "*::archive file:_files -g '(#i)*.(${(j,|,)extensions})(-.)'" && return 0
+
+# vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}

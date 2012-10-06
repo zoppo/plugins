@@ -1,0 +1,12 @@
+if (( $+commands[bunzip2] )); then
+  bunzip2 "$1"
+elif (( $+commands[bzip2] )); then
+  bzip2 -d "$1"
+elif (( $+commands[bzcat] )); then
+  bzcat "$1" >! "${1:r}"
+else
+  print "Please install bzip2 first." >&2
+  return 1
+fi
+
+# vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}
