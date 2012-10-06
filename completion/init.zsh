@@ -3,7 +3,7 @@ if terminal:is-dumb; then
 fi
 
 functions:add-relative 'external/src'
-autoload -Uz compinit && compinit -i
+functions:autoload compinit && compinit -i
 
 # Options {{{
 typeset -a completion_options
