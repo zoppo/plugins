@@ -1,3 +1,5 @@
+plugins:require 'editor' || return 1
+
 source-relative 'external/zsh-history-substring-search.zsh'
 
 # Options {{{
@@ -20,13 +22,12 @@ fi
 
 # Key Bindings {{{
 if [[ -n $key_info ]]; then
-  # EMACS
-  bindkey -M emacs "$key_info[Control]P" history-substring-search-up
-  bindkey -M emacs "$key_info[Control]N" history-substring-search-down
+  editor:emacs:bind "$key_info[Control]P" history-substring-search-up
+  editor:emacs:bind "$key_info[Control]N" history-substring-search-down
 
   # vi
-  bindkey -M vicmd "k" history-substring-search-up
-  bindkey -M vicmd "j" history-substring-search-down
+  editor:vi:normal:bind 'k' history-substring-search-up
+  editor:vi:normal:bind 'j' history-substring-search-down
 
   # EMACS and vi
   for keymap in 'emacs' 'viins'; do
