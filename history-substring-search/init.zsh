@@ -1,4 +1,5 @@
 plugins:require 'editor' || return 1
+plugins:require 'history' || return 1
 
 source-relative 'external/zsh-history-substring-search.zsh'
 
