@@ -3,13 +3,11 @@ if zstyle -t ':zoppo:plugin:utility:ls' color; then
     zstyle -s ':zoppo:plugin:utility:ls' colors LS_COLORS
 
     export LS_COLORS
-  else
-    if is-callable 'dircolors'; then
-      if [[ -s "$HOME/.dircolors" ]]; then
-        eval "$(dircolors "$HOME/.dircolors")"
-      else
-        eval "$(dircolors)"
-      fi
+  elif is-callable 'dircolors'; then
+    if [[ -s "$HOME/.dircolors" ]]; then
+      eval "$(dircolors "$HOME/.dircolors")"
+    else
+      eval "$(dircolors)"
     fi
   fi
 
