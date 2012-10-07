@@ -4,7 +4,7 @@ if is-callable 'ssh-agent'; then
     local -a identities
 
     if [[ -s "$env" ]]; then
-      source "$env" > /dev/null
+      source "$env" &> /dev/null
 
       ps -ef | grep "$SSH_AGENT_PID" | grep -q 'ssh-agent$' && return 0
     fi
@@ -12,7 +12,7 @@ if is-callable 'ssh-agent'; then
     # start ssh-agent and setup the environment
     ssh-agent >! "$env"
     chmod 600 "$env"
-    source "$env" > /dev/null
+    source "$env" &> /dev/null
 
     # load identities
     zstyle -a ':zoppo:plugin:agent:ssh' identities identities
@@ -42,15 +42,15 @@ if is-callable 'gpg-agent'; then
     local env="$1"
 
     if [[ -s "$env" ]]; then
-      source "$env" > /dev/null
+      source "$env" &> /dev/null
 
       ps -ef | grep "$SSH_AGENT_PID" | grep -q 'gpg-agent' && return 0
     fi
 
-    gpg-agent --daemon --write-env-file "$env" > /dev/null
+    gpg-agent --daemon --write-env-file "$env" &> /dev/null
 
     chmod 600 "$env"
-    source "$env" > /dev/null
+    source "$env" &> /dev/null
 
     export GPG_AGENT_INFO
     export GPG_TTY="$(tty)"
