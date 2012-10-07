@@ -49,6 +49,9 @@ unset key
 # allow command line editing in an external editor
 editor:load 'edit-command-line'
 
+zle -N expand-dot-to-parent-directory-realpath
+zdefault ':zoppo:plugin:editor' dot-expansion 'yes'
+
 # Key Bindings {{{
 bindkey -d
 
@@ -65,6 +68,10 @@ for mode in 'emacs' 'viins'; do
 
   # bind <S-Tab> to go to the previous menu item
   bindkey -M "$mode" "$key_info[BackTab]" reverse-menu-complete
+
+  if zstyle -t ':zoppo:plugin:editor' dot-expansion; then
+    bindkey -M "$mode" '.' expand-dot-to-parent-directory-realpath
+  fi
 done
 unset mode
 
