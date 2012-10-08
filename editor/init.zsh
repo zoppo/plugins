@@ -132,6 +132,11 @@ fi
 
 # }}}
 
+# Magic URL {{{
+functions:autoload url-quote-magic
+zle -N self-insert url-quote-magic
+# }}}
+
 # Beep Setting {{{
 if zstyle -t ':zoppo:plugin:editor' beep; then
   setopt BEEP
