@@ -11,13 +11,15 @@ fi
 if ! zstyle -t ':zoppo:plugin:history-substring-search' color; then
   unset HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_{FOUND,NOT_FOUND}
 else
-  zstyle -s ':zoppo:plugin:history-substring-search:colors' found color
-  [ $color ] && HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND="$color"
+  if ! zstyle -T ':zoppo:plugin:history-substring-search:colors' found; then
+    zstyle -s ':zoppo:plugin:history-substring-search:colors' found \
+      HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND
+  fi
 
-  zstyle -s ':zoppo:plugin:history-substring-search:colors' not-found color
-  [ $color ] && HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND="$color"
-
-  unset color
+  if ! zstyle -T ':zoppo:plugin:history-substring-search:colors' not-found; then
+    zstyle -s ':zoppo:plugin:history-substring-search:colors' not-found \
+      HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND
+  fi
 fi
 # }}}
 
