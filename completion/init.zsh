@@ -6,23 +6,26 @@ functions:add-relative 'external/src'
 functions:autoload compinit && compinit -i
 
 # Options {{{
-typeset -a completion_options
-zdefault -a ':zoppo:plugin:completion' options completion_options \
-  'complete-in-word' 'always-to-end' 'path-dirs' 'auto-menu' 'auto-list' 'auto-param-slash' \
-  'no-menu-complete' 'no-flow-control'
+function {
+  local -a options
+  local option
 
-for option in ${completion_options[*]}; do
-  if [[ "$option" =~ "^no-" ]]; then
-    if [ -n "$(unsetopt "${${${option#no-}//-/_}:u}" 2>&1)" ]; then
-      print "completion: ${option#no-} not found: could not disable"
+  zdefault -a ':zoppo:plugin:completion' options options \
+    'complete-in-word' 'always-to-end' 'path-dirs' 'auto-menu' 'auto-list' 'auto-param-slash' \
+    'no-menu-complete' 'no-flow-control'
+
+  for option ("$options[@]"); do
+    if [[ "$option" =~ "^no-" ]]; then
+      if [[ -n "$(unsetopt "${${${option#no-}//-/_}:u}" 2>&1)" ]]; then
+        print "completion: ${option#no-} not found: could not disable"
+      fi
+    else
+      if [[ -n "$(setopt "${${option//-/_}:u}" 2>&1)" ]]; then
+        print "completion: $option not found: could not enable"
+      fi
     fi
-  else
-    if [ -n "$(setopt "${${option//-/_}:u}" 2>&1)" ]; then
-      print "completion: $option not found: could not disable"
-    fi
-  fi
-done
-unset completion_options option
+  done
+}
 
 zdefault -s ':zoppo:plugin:completion' wordchars WORDCHARS '*?_-.[]~&;!#$%^(){}<>'
 #}}}
