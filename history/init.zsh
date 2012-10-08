@@ -8,15 +8,15 @@ function {
 
   zdefault -a ':zoppo:plugin:history' options options \
     'bang-hist' 'extended-history' 'inc-append-history' 'share-history' 'expire-dups-first' \
-    'ignore-dups' 'ignore-all-dups' 'find-no-dups' 'ignore-space' 'save-no-dups' 'verify'
+    'ignore-dups' 'ignore-all-dups' 'find-no-dups' 'ignore-space' 'save-no-dups' 'verify' 'no-beep'
 
   for option ("$options[@]"); do
     if [[ "$option" =~ "^no-" ]]; then
-      if [[ -n "$(unsetopt "${${${option#no-}//-/_}:u}" 2>&1)" ]] && [[ -n "$(unsetopt "HIST_${${${option#no-}//-/_}:u}" 2>&1)" ]]; then
+      if [[ -n "$(unsetopt "HIST_${${${option#no-}//-/_}:u}" 2>&1)" ]] && [[ -n "$(unsetopt "${${${option#no-}//-/_}:u}" 2>&1)" ]]; then
         print "history: ${option#no-} not found: could not disable"
       fi
     else
-      if [[ -n "$(setopt "${${option//-/_}:u}" 2>&1)" ]] && [[ -n "$(setopt "HIST_${${option//-/_}:u}" 2>&1)" ]]; then
+      if [[ -n "$(setopt "HIST_${${option//-/_}:u}" 2>&1)" ]] && [[ -n "$(setopt "${${option//-/_}:u}" 2>&1)" ]]; then
         print "history: $option not found: could not enable"
       fi
     fi
