@@ -47,94 +47,88 @@ unset key
 # }}}
 
 # allow command line editing in an external editor
-editor:load 'edit-command-line'
-
-zle -N expand-dot-to-parent-directory-realpath
-zdefault ':zoppo:plugin:editor' dot-expansion 'yes'
+editor:load edit-command-line
+editor:load self-insert url-quote-magic
 
 # Key Bindings {{{
 bindkey -d
 
-for mode in 'emacs' 'viins'; do
-  bindkey -M "$mode" "$key_info[Home]" beginning-of-line
-  bindkey -M "$mode" "$key_info[End]" end-of-line
+for mode ('emacs' 'vi:insert'); do
+  editor:${mode}:bind "$key_info[Home]" beginning-of-line
+  editor:${mode}:bind "$key_info[End]" end-of-line
 
-  bindkey -M "$mode" "$key_info[Insert]" overwrite-mode
-  bindkey -M "$mode" "$key_info[Delete]" delete-char
-  bindkey -M "$mode" "$key_info[Backspace]" backward-delete-char
+  editor:${mode}:bind "$key_info[Insert]" overwrite-mode
+  editor:${mode}:bind "$key_info[Delete]" delete-char
+  editor:${mode}:bind "$key_info[Backspace]" backward-delete-char
 
-  bindkey -M "$mode" "$key_info[Left]" backward-char
-  bindkey -M "$mode" "$key_info[Right]" forward-char
+  editor:${mode}:bind "$key_info[Left]" backward-char
+  editor:${mode}:bind "$key_info[Right]" forward-char
 
   # bind <S-Tab> to go to the previous menu item
-  bindkey -M "$mode" "$key_info[BackTab]" reverse-menu-complete
+  editor:${mode}:bind "$key_info[BackTab]" reverse-menu-complete
 
-  if zstyle -t ':zoppo:plugin:editor' dot-expansion; then
-    bindkey -M "$mode" '.' expand-dot-to-parent-directory-realpath
+  if zdefault -t ':zoppo:plugin:editor' dot-expansion 'yes'; then
+    editor:${mode}:bind '.' expand-dot-to-parent-directory-realpath
   fi
 done
 unset mode
 
 # EMACS {{{
 for key in "$key_info[Escape]"{B,b}
-  bindkey -M emacs "$key" emacs-backward-word
+  editor:emacs:bind "$key" emacs-backward-word
 
 for key in "$key_info[Escape]"{F,f}
-  bindkey -M emacs "$key" emacs-forward-word
+  editor:emacs:bind "$key" emacs-forward-word
 
-bindkey -M emacs "$key_info[Escape]$key_info[Left]" emacs-backward-word
-bindkey -M emacs "$key_info[Escape]$key_info[Right]" emacs-forward-word
+editor:emacs:bind "$key_info[Escape]$key_info[Left]" emacs-backward-word
+editor:emacs:bind "$key_info[Escape]$key_info[Right]" emacs-forward-word
 
 # kill to the beginning of the line
 for key in "$key_info[Escape]"{K,k}
-  bindkey -M emacs "$key" backward-kill-line
+  editor:emacs:bind "$key" backward-kill-line
 
-bindkey -M emacs "$key_info[Escape]_" redo
+editor:emacs:bind "$key_info[Escape]_" redo
 
 # search previous character
-bindkey -M emacs "$key_info[Control]X$key_info[Control]B" vi-find-prev-char
+editor:emacs:bind "$key_info[Control]X$key_info[Control]B" vi-find-prev-char
 
 # match bracket
-bindkey -M emacs "$key_info[Control]X$key_info[Control]]" vi-match-bracket
+editor:emacs:bind "$key_info[Control]X$key_info[Control]]" vi-match-bracket
 
 # edit command in an external editor
-bindkey -M emacs "$key_info[Control]X$key_info[Control]E" edit-command-line
+editor:emacs:bind "$key_info[Control]X$key_info[Control]E" edit-command-line
 
 if (( $+widgets[history-incremental-pattern-search-backward] )); then
-  bindkey -M emacs "$key_info[Control]R" \
-    history-incremental-pattern-search-backward
-  bindkey -M emacs "$key_info[Control]S" \
-    history-incremental-pattern-search-forward
+  editor:emacs:bind "$key_info[Control]R" history-incremental-pattern-search-backward
+  editor:emacs:bind "$key_info[Control]S" history-incremental-pattern-search-forward
+else
+  editor:emacs:bind "$key_info[Control]R" history-incremental-search-backward
+  editor:emacs:bind "$key_info[Control]S" history-incremental-search-forward
 fi
 # }}}
 
 # vi {{{
 
 # edit command in an external editor.
-bindkey -M vicmd "v" edit-command-line
+editor:vi:normal:bind "v" edit-command-line
 
 # undo/redo
-bindkey -M vicmd "u" undo
-bindkey -M vicmd "$key_info[Control]R" redo
+editor:vi:normal:bind "u" undo
+editor:vi:normal:bind "$key_info[Control]R" redo
 
 # switch to command mode
-bindkey -M viins "jk" vi-cmd-mode
-bindkey -M viins "kj" vi-cmd-mode
+editor:vi:insert:bind "jk" vi-cmd-mode
+editor:vi:insert:bind "kj" vi-cmd-mode
 
 if (( $+widgets[history-incremental-pattern-search-backward] )); then
-  bindkey -M vicmd "?" history-incremental-pattern-search-backward
-  bindkey -M vicmd "/" history-incremental-pattern-search-forward
+  editor:vi:normal:bind "?" history-incremental-pattern-search-backward
+  editor:vi:normal:bind "/" history-incremental-pattern-search-forward
 else
-  bindkey -M vicmd "?" history-incremental-search-backward
-  bindkey -M vicmd "/" history-incremental-search-forward
+  editor:vi:normal:bind "?" history-incremental-search-backward
+  editor:vi:normal:bind "/" history-incremental-search-forward
 fi
 # }}}
 
-# }}}
-
-# Magic URL {{{
-functions:autoload url-quote-magic
-zle -N self-insert url-quote-magic
 # }}}
 
 # Beep Setting {{{
@@ -149,7 +143,7 @@ fi
 zdefault -s ':zoppo:plugin:editor' mode mode 'emacs'
 case "$mode" in
   emacs) bindkey -e ;;
-  vi|vim|viins) bindkey -v ;;
+  vi|vim) bindkey -v ;;
 esac
 unset mode
 # }}}
