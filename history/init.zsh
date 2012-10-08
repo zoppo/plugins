@@ -8,7 +8,7 @@ function {
 
   zdefault -a ':zoppo:plugin:history' options options \
     'bang-hist' 'extended-history' 'inc-append-history' 'share-history' 'expire-dups-first' \
-    'ignore-dups' 'ignore-all-dups' 'find-no-dups' 'ignore-space' 'save-no-dups' 'verify' 'no-beep'
+    'ignore-dups' 'ignore-all-dups' 'find-no-dups' 'ignore-space' 'save-no-dups' 'verify'
 
   for option ("$options[@]"); do
     if [[ "$option" =~ "^no-" ]]; then
