@@ -27,7 +27,7 @@ if is-callable 'ssh-agent'; then
     export SSH_AUTH_SOCK
   }
 
-  if zstyle -t ':zoppo:plugin:agent:ssh' enable; then
+  if zdefault -t ':zoppo:plugin:agent:ssh' enable 'yes'; then
     if zstyle -t ':zoppo:plugin:agent:ssh' forwarding && [[ -n "$SSH_AUTH_SOCK" ]]; then
       # add a nifty symlink for screen/tmux if agent forwarding
       [[ -L "$SSH_AUTH_SOCK" ]] || ln -sf "$SSH_AUTH_SOCK" /tmp/ssh-agent-$USER-screen
@@ -56,7 +56,7 @@ if is-callable 'gpg-agent'; then
     export GPG_TTY="$(tty)"
   }
 
-  if zstyle -t ':zoppo:plugin:agent:gpg' enable; then
+  if zdefault -t ':zoppo:plugin:agent:gpg' enable 'no'; then
     agent:gpg:start "$HOME/.gnupg/gpg-agent.env"
   fi
 fi
