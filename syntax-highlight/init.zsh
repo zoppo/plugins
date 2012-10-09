@@ -1,3 +1,7 @@
+# this is needed because we have to load the editor stuff before running this
+# otherwise the coloring breaks (happened with url-quote-magic and self-insert)
+plugins:require 'editor' || return 1
+
 zstyle -t ':zoppo:plugin:syntax-highlight' color || return 1
 
 source-relative 'external/zsh-syntax-highlighting.zsh'
