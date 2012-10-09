@@ -15,7 +15,7 @@ if [[ -s $z_pythonz_path ]]; then
   path=("$z_pythonz_path" $path)
 fi
 
-if is-callable virtualenvwrapper_lazy.sh; then
+if (( $+commands[virtualenvwrapper_lazy.sh] )); then
   export WORKON_HOME="$z_virtualenv_path"
   export VIRTUAL_ENV_DISABLE_PROMPT=1
 
