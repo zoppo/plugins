@@ -1,0 +1,11 @@
+ruby:rvm:version && return 0
+
+ruby:rbenv:version && return 0
+
+if is-callable ruby; then
+  ruby -v | awk '{ print $2 }'
+else
+  return 1
+fi
+
+# vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}
