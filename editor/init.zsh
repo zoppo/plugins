@@ -36,7 +36,7 @@ key_info=(
 )
 
 # do not bind any keys if there are empty values in $key_info
-for key in "${(k)key_info[@]}"; do
+for key ("${(k)key_info[@]}"); do
   if [[ -z "$key_info[$key]" ]]; then
     print 'zoppo: one or more keys are non-bindable' >&2
     unset key{,_info}
