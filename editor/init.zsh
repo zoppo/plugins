@@ -9,8 +9,8 @@ key_info=(
   'Control'   '\C-'
   'Escape'    '\e'
   'Meta'      '\M-'
-  'Backspace' "^?"
-  'Delete'    "^[[3~"
+  'Backspace' '^?'
+  'Delete'    '^[[3~'
   'F1'        "$terminfo[kf1]"
   'F2'        "$terminfo[kf2]"
   'F3'        "$terminfo[kf3]"
@@ -51,6 +51,8 @@ editor:load edit-command-line
 editor:load self-insert url-quote-magic
 
 # Key Bindings {{{
+
+# reset the bindings to defaults
 bindkey -d
 
 for mode ('emacs' 'vi:insert'); do
@@ -98,7 +100,7 @@ editor:emacs:bind "$key_info[Control]X$key_info[Control]]" vi-match-bracket
 # edit command in an external editor
 editor:emacs:bind "$key_info[Control]X$key_info[Control]E" edit-command-line
 
-if (( $+widgets[history-incremental-pattern-search-backward] )); then
+if editor:is-loaded history-incremental-pattern-search-backward; then
   editor:emacs:bind "$key_info[Control]R" history-incremental-pattern-search-backward
   editor:emacs:bind "$key_info[Control]S" history-incremental-pattern-search-forward
 else
@@ -110,22 +112,22 @@ fi
 # vi {{{
 
 # edit command in an external editor.
-editor:vi:normal:bind "v" edit-command-line
+editor:vi:normal:bind 'v' edit-command-line
 
 # undo/redo
-editor:vi:normal:bind "u" undo
+editor:vi:normal:bind 'u' undo
 editor:vi:normal:bind "$key_info[Control]R" redo
 
 # switch to command mode
-editor:vi:insert:bind "jk" vi-cmd-mode
-editor:vi:insert:bind "kj" vi-cmd-mode
+editor:vi:insert:bind 'jk' vi-cmd-mode
+editor:vi:insert:bind 'kj' vi-cmd-mode
 
-if (( $+widgets[history-incremental-pattern-search-backward] )); then
-  editor:vi:normal:bind "?" history-incremental-pattern-search-backward
-  editor:vi:normal:bind "/" history-incremental-pattern-search-forward
+if editor:is-loaded history-incremental-pattern-search-backward; then
+  editor:vi:normal:bind '?' history-incremental-pattern-search-backward
+  editor:vi:normal:bind '/' history-incremental-pattern-search-forward
 else
-  editor:vi:normal:bind "?" history-incremental-search-backward
-  editor:vi:normal:bind "/" history-incremental-search-forward
+  editor:vi:normal:bind '?' history-incremental-search-backward
+  editor:vi:normal:bind '/' history-incremental-search-forward
 fi
 # }}}
 
