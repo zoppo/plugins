@@ -7,20 +7,20 @@ functions:autoload compinit && compinit -i
 
 # Options {{{
 function {
-  local -a options
+  local -a zoptions
   local option
 
-  zdefault -a ':zoppo:plugin:completion' options options \
+  zdefault -a ':zoppo:plugin:completion' options zoptions \
     'complete-in-word' 'always-to-end' 'path-dirs' 'auto-menu' 'auto-list' 'auto-param-slash' \
     'no-menu-complete' 'no-flow-control'
 
-  for option ("$options[@]"); do
+  for option ("$zoptions[@]"); do
     if [[ "$option" =~ "^no-" ]]; then
-      if [[ -n "$(unsetopt "${${${option#no-}//-/_}:u}" 2>&1)" ]]; then
+      if ! options:disable "${option#no-}"; then
         print "completion: ${option#no-} not found: could not disable"
       fi
     else
-      if [[ -n "$(setopt "${${option//-/_}:u}" 2>&1)" ]]; then
+      if ! options:enable "$option"; then
         print "completion: $option not found: could not enable"
       fi
     fi
