@@ -13,3 +13,6 @@
 [submodule "aliases"]
 	path = aliases
 	url = git://github.com/zoppo/aliases.git
+[submodule "fasd/external"]
+	path = fasd/external
+	url = git://github.com/clvv/fasd.git
