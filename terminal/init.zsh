@@ -19,7 +19,7 @@ function terminal:preexec:title {
 add-zsh-hook precmd terminal:precmd:title
 add-zsh-hook preexec terminal:preexec:title
 
-if functions:autoload colors && colors && terminal:is-256-color; then
+if functions:autoload colors && colors && terminal:colors 256; then
   typeset -gA fx fg bg
 
   fx=(
