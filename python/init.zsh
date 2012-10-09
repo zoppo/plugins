@@ -1,6 +1,3 @@
-zdefault -s ':zoppo:plugin:python:pythonz' path z_pythonz_path "$HOME/.pythonz/bin/pythonz"
-zdefault -s ':zoppo:plugin:python:virtualenv' path z_virtualenv_path "$HOME/.virtualenvs"
-
 # prepend PEP 370 per user site packages directory, which defaults to
 # ~/Library/Python on Mac OS X and ~/.local elsewhere, to PATH/MANPATH
 if [[ "$OSTYPE" == darwin* ]]; then
@@ -11,17 +8,33 @@ else
   manpath=($HOME/.local/{,share/}man(N) $manpath)
 fi
 
-if [[ -s $z_pythonz_path ]]; then
-  path=("$z_pythonz_path" $path)
+# pythonz {{{
+if zdefault -t ':zoppo:plugin:python:pythonz' enable 'no'; then
+  function {
+    local binary
+    zdefault -s ':zoppo:plugin:python:pythonz' path binary "$HOME/.pythonz/bin/pythonz"
+
+    if [[ -x $binary ]]; then
+      path=("$(dirname "$binary")" $path)
+    fi
+  }
 fi
+# }}}
 
-if (( $+commands[virtualenvwrapper_lazy.sh] )); then
-  export WORKON_HOME="$z_virtualenv_path"
-  export VIRTUAL_ENV_DISABLE_PROMPT=1
+# virtualenv {{{
+if zdefault -t ':zoppo:plugin:python:virtualenv' enable 'no'; then
+  function {
+    local envs
+    zdefault -s ':zoppo:plugin:python:virtualenv' path envs "$HOME/.virtualenvs"
 
-  source "$commands[virtualenvwrapper_lazy.sh]"
+    if (( $+commands[virtualenvwrapper_lazy.sh] )); then
+      export WORKON_HOME="$envs"
+      export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+      source "$commands[virtualenvwrapper_lazy.sh]"
+    fi
+  }
 fi
-
-unset z_{pythonz,virtualenv}_path
+# }}}
 
 # vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}
