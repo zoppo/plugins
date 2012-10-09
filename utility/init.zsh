@@ -1,3 +1,6 @@
+options:enable 'correct'
+
+# GNU utilities {{{
 if zstyle -t ':zoppo:plugin:utility:gnu' enable; then
   function {
     local prefix
@@ -39,7 +42,9 @@ if zstyle -t ':zoppo:plugin:utility:gnu' enable; then
     done
   }
 fi
+# }}}
 
+# ls {{{
 if zstyle -t ':zoppo:plugin:utility:ls' color; then
   if ! zstyle -T ':zoppo:plugin:utility:ls' colors; then
     zstyle -s ':zoppo:plugin:utility:ls' colors LS_COLORS
@@ -53,11 +58,17 @@ if zstyle -t ':zoppo:plugin:utility:ls' color; then
     fi
   fi
 
-  alias ls="${aliases[ls]:-ls} --color=auto"
+  if utility:is-gnu; then
+    alias+ ls '--color=auto'
+  else
+    alias+ ls '-G'
+  fi
 else
-  alias ls="${aliases[ls]:-ls} -F"
+  alias+ ls '-F'
 fi
+# }}}
 
+# grep {{{
 if zstyle -t ':zoppo:plugin:utility:grep' color; then
   export GREP_OPTIONS="$GREP_OPTIONS --color=auto"
 
@@ -66,7 +77,50 @@ if zstyle -t ':zoppo:plugin:utility:grep' color; then
 
   export GREP_COLOR GREP_COLORS
 fi
+# }}}
 
+# Disable Correction {{{
+function {
+  local programs
+  local program
+
+  zdefault -a ':zoppo:plugin:utility' no-correct programs \
+    'ack' 'cd' 'cp' 'ebuild' 'gcc' 'gist' 'grep' 'heroku' 'ln' 'man' 'mkdir' 'mv' 'mysql' 'rm'
+
+  for program ("$programs[@]")
+    alias "$program"="nocorrect $program"
+}
+# }}}
+
+# Disable Globbing {{{
+function {
+  local programs
+  local program
+
+  zdefault -a ':zoppo:plugin:utility' no-glob programs \
+    'fc' 'find' 'ftp' 'history' 'locate' 'rake' 'rsync' 'scp' 'sftp'
+
+  for program ("$programs[@]")
+    alias "$program"="noglob $program"
+}
+# }}}
+
+# Enable Interactive {{{
+function {
+  local programs
+  local program
+
+  zdefault -a ':zoppo:plugin:utility' interactive programs \
+    'cp' 'ln' 'mv' 'rm'
+
+  for program ("$programs[@]")
+    alias+ "$program" '-i'
+}
+
+# }}}
+
+# Directory Stuff {{{
+alias+ mkdir '-p'
 alias md='mkdir'
 
 function mcd {
@@ -78,5 +132,45 @@ alias mkdcd='mcd'
 function cdls {
   builtin cd "$argv[-1]" && ls "${(@)argv[1,-2]}"
 }
+# }}}
+
+# Mac OS X Everywhere {{{
+if [[ "$OSTYPE" == darwin* ]]; then
+  alias o='open'
+  alias get='curl --continue-at - --location --progress-bar --remote-name --remote-time'
+else
+  alias o='xdg-open'
+  alias get='wget --continue --progress=bar --timestamping'
+
+  if is-callable xclip; then
+    alias pbcopy='xclip -selection clipboard -in'
+    alias pbpaste='xclip -selection clipboard -out'
+  elif is-callable xsel; then
+    alias pbcopy='xsel --clipboard --input'
+    alias pbpaste='xsel --clipboard --output'
+  fi
+fi
+
+alias pbc='pbcopy'
+alias pbp='pbpaste'
+
+alias copy='pbc'
+alias paste='pbp'
+# }}}
+
+# sprunge.us {{{
+if is-callable curl && is-callable cat; then
+  alias sprunge="curl -F'sprunge=<-' sprunge.us"
+
+  function sprunger {
+    (( $+1 )) || {
+      print "USAGE: ${0:t} <file>" >&2
+      return 1
+    }
+
+    print "${${${:-"$(cat "$1" | sprunge)"}%%*( )}##*( )}"
+  }
+fi
+# }}}
 
 # vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}
