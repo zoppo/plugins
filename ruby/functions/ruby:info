@@ -1,6 +1,10 @@
-(( $+commands[ruby] )) || return 1
-
 typeset -gA ruby_info
+
+if ! (( $+commands[ruby] )); then
+  unset ruby_info
+  return 1
+fi
+
 local -a infos
 
 # Caching previous results
