@@ -78,9 +78,11 @@ unset mode
 # EMACS {{{
 for key in "$key_info[Escape]"{B,b}
   editor:emacs:bind "$key" emacs-backward-word
+unset key
 
 for key in "$key_info[Escape]"{F,f}
   editor:emacs:bind "$key" emacs-forward-word
+unset key
 
 editor:emacs:bind "$key_info[Escape]$key_info[Left]" emacs-backward-word
 editor:emacs:bind "$key_info[Escape]$key_info[Right]" emacs-forward-word
@@ -88,6 +90,7 @@ editor:emacs:bind "$key_info[Escape]$key_info[Right]" emacs-forward-word
 # kill to the beginning of the line
 for key in "$key_info[Escape]"{K,k}
   editor:emacs:bind "$key" backward-kill-line
+unset key
 
 editor:emacs:bind "$key_info[Escape]_" redo
 
