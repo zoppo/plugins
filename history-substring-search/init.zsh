@@ -24,20 +24,23 @@ fi
 # }}}
 
 # Key Bindings {{{
-if [[ -n $key_info ]]; then
-  editor:emacs:bind "$key_info[Control]P" history-substring-search-up
-  editor:emacs:bind "$key_info[Control]N" history-substring-search-down
 
-  # vi
-  editor:vi:normal:bind 'k' history-substring-search-up
-  editor:vi:normal:bind 'j' history-substring-search-down
+for mode in 'emacs' 'vi:insert'; do
+  editor:${mode}:bind "$key_info[Up]" history-substring-search-up
+  editor:${mode}:bind "$keymap" "$key_info[Down]" history-substring-search-down
+done
+unset mode
 
-  # EMACS and vi
-  for keymap in 'emacs' 'viins'; do
-    bindkey -M "$keymap" "$key_info[Up]" history-substring-search-up
-    bindkey -M "$keymap" "$key_info[Down]" history-substring-search-down
-  done
-fi
+# EMACS {{{
+editor:emacs:bind "$key_info[Control]P" history-substring-search-up
+editor:emacs:bind "$key_info[Control]N" history-substring-search-down
+# }}}
+
+# vi {{{
+editor:vi:normal:bind 'k' history-substring-search-up
+editor:vi:normal:bind 'j' history-substring-search-down
+# }}}
+
 # }}}
 
 # vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}
