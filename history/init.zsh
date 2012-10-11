@@ -16,7 +16,7 @@ function {
         print "history: ${option#no-} not found: could not disable"
       fi
     else
-      if ! options:enable "hist-${${${option#no-}//-/_}:u}" && ! options:enable "${${${option#no-}//-/_}:u}"; then
+      if ! options:enable "hist-${${option//-/_}:u}" && ! options:enable "${${option//-/_}:u}"; then
         print "history: $option not found: could not enable"
       fi
     fi
