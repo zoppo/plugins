@@ -1,4 +1,4 @@
-if is-callable 'ssh-agent'; then
+if is-callable ssh-agent; then
   function agent:ssh:start {
     local env="$1"
     local -a identities
@@ -37,7 +37,7 @@ if is-callable 'ssh-agent'; then
   fi
 fi
 
-if is-callable 'gpg-agent'; then
+if is-callable gpg-agent; then
   function agent:gpg:start {
     local env="$1"
 
