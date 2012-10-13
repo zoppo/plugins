@@ -1,5 +1,19 @@
 options:enable 'correct'
 
+# ZSH utilities {{{
+if zdefault -t ':zoppo:plugin:utility:zsh' enable 'yes'; then
+  functions:autoload ztodo
+  functions:autoload zed
+  functions:autoload zcalc
+
+  functions:autoload zmv
+  alias zcp='zmv -C'
+  alias zln='zmv -L'
+
+  functions:autoload zargs
+fi
+# }}}
+
 # GNU utilities {{{
 if zstyle -t ':zoppo:plugin:utility:gnu' enable; then
   function {
