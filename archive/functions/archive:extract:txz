@@ -1,9 +1,9 @@
 (( $+commands[tar] )) || {
-  print "Please install tar first." >&2
+  warn 'extract: you have to install tar'
   return 1
 }
 
-if tar --xz --help &>/dev/null;
+if tar --xz --help &>/dev/null; then
   tar --xz -xvf "$1"
 elif (( $+commands[xz] )); then
   xz -d -c "$1" | tar xvf -
@@ -12,7 +12,7 @@ elif (( $+commands[unxz] )); then
 elif (( $+commands[xzcat] )); then
   xzcat "$1" | tar xvf -
 else
-  print "Install a xz-compatibile version of tar or xz." >&2
+  warn 'extract: you have to install an xz-compatible version of tar or xz'
   return 1
 fi
 

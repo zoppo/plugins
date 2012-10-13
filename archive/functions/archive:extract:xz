@@ -5,7 +5,7 @@ elif (( $+commands[xz] )); then
 elif (( $+commands[xzcat] )); then
   xzcat "$1" >! "${1:r}"
 else
-  print "Please install xz first." >&2
+  warn 'extract: you have to install xz'
   return 1
 fi
 

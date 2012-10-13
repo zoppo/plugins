@@ -5,7 +5,7 @@ elif (( $+commands[gzip] )); then
 elif (( $+commands[zcat] )); then
   zcat "$1" >! "${1:r}"
 else
-  print "Please install gzip first." >&2
+  warn 'extract: you have to install gzip'
   return 1
 fi
 

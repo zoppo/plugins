@@ -5,7 +5,7 @@ elif (( $+commands[lzma] )); then
 elif (( $+commands[lzcat] )); then
   lzcat "$1" >! "${1:r}"
 else
-  print "Please install lzma first." >&2
+  warn 'extract: you have to install lzma'
   return 1
 fi
 

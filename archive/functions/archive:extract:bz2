@@ -5,7 +5,7 @@ elif (( $+commands[bzip2] )); then
 elif (( $+commands[bzcat] )); then
   bzcat "$1" >! "${1:r}"
 else
-  print "Please install bzip2 first." >&2
+  warn 'extract: you have to install bzip2'
   return 1
 fi
 

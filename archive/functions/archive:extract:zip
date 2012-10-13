@@ -1,7 +1,7 @@
 if (( $+commands[unzip] )); then
   unzip "$1" -d "${1:t:r}"
 else
-  print "Please install unzip first." >&2
+  warn 'extract: you have to install unzip'
   return 1
 fi
 

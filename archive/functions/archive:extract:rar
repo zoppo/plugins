@@ -3,7 +3,7 @@ if (( $+commands[unrar] )); then
 elif (( $+commands[rar] )); then
   rar x -ad "$1"
 else
-  print "Please install unrar or rar first." >&2
+  warn 'extract: you have to install unrar or rar'
   return 1
 fi
 

@@ -1,7 +1,7 @@
 if (( $+commands[tar] )); then
-  tar xvzf "$1"
+  tar xvjf "$1"
 else
-  print "Please install tar first." >&2
+  warn 'extract: you have to install tar'
   return 1
 fi
 

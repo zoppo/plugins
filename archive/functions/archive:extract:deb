@@ -1,10 +1,10 @@
 (( $+commands[ar] )) || {
-  print "Please install ar first." >&2
+  warn 'extract: you have to install ar'
   return 1
 }
 
 (( $+commands[tar] )) || {
-  print "Please install tar first." >&2
+  warn 'extract: you have to install tar'
   return 1
 }
 

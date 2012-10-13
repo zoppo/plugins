@@ -1,5 +1,5 @@
 (( $+commands[tar] )) || {
-  print "Please install tar first." >&2
+  warn 'extract: you have to install tar'
   return 1
 }
 
@@ -12,7 +12,7 @@ elif (( $+commands[unlzma] )); then
 elif (( $+commands[lzcat] )); then
   lzcat "$1" | tar xvf -
 else
-  print "Install a lzma-compatible version of tar or lzma." >&2
+  warn 'extract: you have to install an lzma-compatible version of tar or lzma'
   return 1
 fi
 

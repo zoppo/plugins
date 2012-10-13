@@ -1,0 +1,21 @@
+typeset -ga extensions
+local -a disable
+local name
+
+extensions=()
+
+for name ("${(@k)functions}"); do
+  [[ "$name" == archive:$1:* ]] || continue
+
+  zstyle -a ':zoppo:plugin:archive' disable disable
+  [[ "${disable[(I)${name#archive:$1:}]}" == 0 ]] || continue
+
+  zstyle -a ":zoppo:plugin:archive:$1" disable disable
+  [[ "${disable[(I)${name#archive:$1:}]}" == 0 ]] || continue
+
+  extensions+=("${name#archive:$1:}")
+done
+
+sort_by_length extensions
+
+# vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}

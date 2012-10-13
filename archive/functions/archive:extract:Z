@@ -1,7 +1,7 @@
 if (( $+commands[uncompress] )); then
   uncompress "$1"
 else
-  print "Please install uncompress (in gzip package) first." >&2
+  warn 'extract: you have to install uncompress (included in gzip)'
   return 1
 fi
 

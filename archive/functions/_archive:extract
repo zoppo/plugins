@@ -1,10 +1,8 @@
-#compdef extract
+#compdef archive:extract
 
 local -a extensions
 
-zstyle -a ':zoppo:plugin:archive:extract' extensions extensions
-extensions=(${(@u)extensions})
-sort_by_length extensions
+archive:extensions extract
 
 _arguments \
   '(-r --remove)'{-r,--remove}'[remove archive]' \
