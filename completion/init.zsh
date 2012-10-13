@@ -3,7 +3,13 @@ if terminal:is-dumb; then
 fi
 
 functions:add-relative 'external/src'
-functions:autoload compinit && compinit -i
+functions:autoload compinit
+
+function completion:init {
+  compinit -i
+}
+
+hooks:add zoppo_postinit completion:init
 
 # Options {{{
 function {
