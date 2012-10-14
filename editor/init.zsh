@@ -69,6 +69,12 @@ for mode ('emacs' 'vi:insert'); do
   editor:${mode}:bind "$key_info[Left]" backward-char
   editor:${mode}:bind "$key_info[Right]" forward-char
 
+  editor:${mode}:bind "$key_info[Up]" up-line-or-history
+  editor:${mode}:bind "$key_info[Down]" down-line-or-history
+
+  editor:${mode}:bind "$key_info[PageUp]" up-line-or-history
+  editor:${mode}:bind "$key_info[PageDown]" down-line-or-history
+
   # bind <S-Tab> to go to the previous menu item
   editor:${mode}:bind "$key_info[BackTab]" reverse-menu-complete
 
@@ -135,6 +141,23 @@ else
   editor:vi:normal:bind '?' history-incremental-search-backward
   editor:vi:normal:bind '/' history-incremental-search-forward
 fi
+# }}}
+
+# Dumb Terminals {{{
+for mode ('emacs' 'vi:insert'); do
+  editor:${mode}:bind "^[[H" beginning-of-line
+  editor:${mode}:bind "^[[1~" beginning-of-line
+  editor:${mode}:bind "^[OH" beginning-of-line
+
+  editor:${mode}:bind "^[[F"  end-of-line
+  editor:${mode}:bind "^[[4~" end-of-line
+  editor:${mode}:bind "^[OF" end-of-line
+
+  editor:${mode}:bind '^?' backward-delete-char
+  editor:${mode}:bind "^[[3~" delete-char
+  editor:${mode}:bind "^[3;5~" delete-char
+  editor:${mode}:bind "\e[3~" delete-char
+done
 # }}}
 
 # }}}
