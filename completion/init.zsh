@@ -32,8 +32,6 @@ function {
     fi
   done
 }
-
-zdefault -s ':zoppo:plugin:completion' wordchars WORDCHARS '*?_-.[]~&;!#$%^(){}<>'
 #}}}
 
 # Styles {{{
