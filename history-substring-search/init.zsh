@@ -28,6 +28,9 @@ fi
 for mode in 'emacs' 'vi:insert'; do
   editor:${mode}:bind "$key_info[Up]" history-substring-search-up
   editor:${mode}:bind "$key_info[Down]" history-substring-search-down
+
+  editor:${mode}:bind "$key_info[PageUp]" history-substring-search-up
+  editor:${mode}:bind "$key_info[PageDown]" history-substring-search-down
 done
 unset mode
 
