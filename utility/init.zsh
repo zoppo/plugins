@@ -23,7 +23,7 @@ if zstyle -t ':zoppo:plugin:utility:gnu' enable; then
 
     zdefault -s ':zoppo:plugin:utility:gnu' prefix prefix 'g'
     zdefault -a ':zoppo:plugin:utility:gnu' binaries binaries \
-      '[' 'base64' 'basename' 'cat' 'chcon' 'chgrp' 'chmod' 'chown' \
+      'base64' 'basename' 'cat' 'chcon' 'chgrp' 'chmod' 'chown' \
       'chroot' 'cksum' 'comm' 'cp' 'csplit' 'cut' 'date' 'dd' 'df' \
       'dir' 'dircolors' 'dirname' 'du' 'echo' 'env' 'expand' 'expr' \
       'factor' 'false' 'fmt' 'fold' 'groups' 'head' 'hostid' 'id' \
@@ -47,11 +47,12 @@ if zstyle -t ':zoppo:plugin:utility:gnu' enable; then
       'getopt' 'grep' 'indent' 'sed' 'tar' 'time' 'units' 'which'
 
     for cmd in "$binaries[@]"; do
-      is-callable "$prefix$cmd" && continue
-      is-callable "$cmd" || continue
+      if ! is-command "$prefix$cmd" || is-function "$cmd"; then
+        continue
+      fi
 
       eval "function $cmd {
-        $prefix$cmd \"$@\"
+        $prefix$cmd \"\$@\"
       }"
     done
   }
