@@ -46,6 +46,9 @@ done
 unset key
 # }}}
 
+# set wordchars
+zdefault -s ':zoppo:plugin:editor' wordchars WORDCHARS '*?_-.[]~&;!#$%^(){}<>'
+
 # allow command line editing in an external editor
 editor:load edit-command-line
 editor:load self-insert url-quote-magic
