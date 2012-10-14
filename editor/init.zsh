@@ -38,7 +38,7 @@ key_info=(
 # do not bind any keys if there are empty values in $key_info
 for key ("${(k)key_info[@]}"); do
   if [[ -z "$key_info[$key]" ]]; then
-    print 'zoppo: one or more keys are non-bindable' >&2
+    warn 'zoppo: one or more keys are non-bindable'
     unset key{,_info}
     return 1
   fi
