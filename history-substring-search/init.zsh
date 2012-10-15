@@ -26,17 +26,17 @@ fi
 # Key Bindings {{{
 
 for mode in 'emacs' 'vi:insert'; do
-  editor:${mode}:bind "$key_info[Up]" history-substring-search-up
-  editor:${mode}:bind "$key_info[Down]" history-substring-search-down
+  editor:${mode}:bind 'Up' history-substring-search-up
+  editor:${mode}:bind 'Down' history-substring-search-down
 
-  editor:${mode}:bind "$key_info[PageUp]" history-substring-search-up
-  editor:${mode}:bind "$key_info[PageDown]" history-substring-search-down
+  editor:${mode}:bind 'PageUp' history-substring-search-up
+  editor:${mode}:bind 'PageDown' history-substring-search-down
 done
 unset mode
 
 # EMACS {{{
-editor:emacs:bind "$key_info[Control]P" history-substring-search-up
-editor:emacs:bind "$key_info[Control]N" history-substring-search-down
+editor:emacs:bind 'Control+P' history-substring-search-up
+editor:emacs:bind 'Control+N' history-substring-search-down
 # }}}
 
 # vi {{{
