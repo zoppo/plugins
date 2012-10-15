@@ -1,5 +1,5 @@
 (( $+commands[tar] )) || {
-  print "Please install tar first." >&2
+  warn "Please install tar first."
   return 1
 }
 
