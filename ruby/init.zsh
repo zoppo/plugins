@@ -6,7 +6,7 @@ if zdefault -t ':zoppo:plugin:ruby:rvm' enable 'no'; then
 
     # warn if auto-name-dirs is enabled and disable it
     if options:is-enabled 'auto-name-dirs'; then
-      warn 'zoppo: RVM does not work with auto-name-dirs enabled, disabling' 1>&2
+      warn 'zoppo: RVM does not work with auto-name-dirs enabled, disabling'
 
       options:disable 'auto-name-dirs'
     fi
