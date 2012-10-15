@@ -1,3 +1,4 @@
+# npm Completion {{{
 if zdefault -t ':zoppo:plugin:node:npm' enable 'yes'; then
   function {
     local cache
@@ -12,5 +13,6 @@ if zdefault -t ':zoppo:plugin:node:npm' enable 'yes'; then
     fi
   }
 fi
+# }}}
 
 # vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}
