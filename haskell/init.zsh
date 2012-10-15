@@ -1,3 +1,4 @@
+# Path Settings {{{
 function {
   typeset -gU path manpath
 
@@ -12,5 +13,6 @@ function {
     manpath=($HOME/.cabal/man(/N) $manpath)
   fi
 }
+# }}}
 
 # vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}
