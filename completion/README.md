@@ -3,7 +3,7 @@ Completion
 Loads and configures tab completion and provides additional completions from
 the [zsh-completions][1] project.
 
-Completion options
+Completion Options
 ------------------
 You can pass completion options to enable/disable.
 
