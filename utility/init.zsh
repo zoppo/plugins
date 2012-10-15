@@ -179,7 +179,7 @@ if is-callable curl && is-callable cat; then
 
   function sprunger {
     (( $+1 )) || {
-      print "USAGE: ${0:t} <file>" >&2
+      warn "USAGE: ${0:t} <file>"
       return 1
     }
 
