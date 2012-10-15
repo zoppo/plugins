@@ -2,81 +2,20 @@ if terminal:is-dumb; then
   return 1
 fi
 
-# Key Info {{{
-zmodload zsh/terminfo
-typeset -gA key_info
-key_info=(
-  'Control'   '\C-'
-  'Escape'    '\e'
-  'Meta'      '\M-'
-  'Backspace' '^?'
-  'Delete'    '^[[3~'
-  'F1'        "$terminfo[kf1]"
-  'F2'        "$terminfo[kf2]"
-  'F3'        "$terminfo[kf3]"
-  'F4'        "$terminfo[kf4]"
-  'F5'        "$terminfo[kf5]"
-  'F6'        "$terminfo[kf6]"
-  'F7'        "$terminfo[kf7]"
-  'F8'        "$terminfo[kf8]"
-  'F9'        "$terminfo[kf9]"
-  'F10'       "$terminfo[kf10]"
-  'F11'       "$terminfo[kf11]"
-  'F12'       "$terminfo[kf12]"
-  'Insert'    "$terminfo[kich1]"
-  'Home'      "$terminfo[khome]"
-  'PageUp'    "$terminfo[kpp]"
-  'End'       "$terminfo[kend]"
-  'PageDown'  "$terminfo[knp]"
-  'Up'        "$terminfo[kcuu1]"
-  'Left'      "$terminfo[kcub1]"
-  'Down'      "$terminfo[kcud1]"
-  'Right'     "$terminfo[kcuf1]"
-  'BackTab'   "$terminfo[kcbt]"
-)
-
-# do not bind any keys if there are empty values in $key_info
-for key ("${(k)key_info[@]}"); do
-  if [[ -z "$key_info[$key]" ]]; then
-    warn 'zoppo: one or more keys are non-bindable'
-    unset key{,_info}
-    return 1
-  fi
-done
-unset key
-# }}}
-
 # set wordchars
 zdefault -s ':zoppo:plugin:editor' wordchars WORDCHARS '*?_-.[]~&;!#$%^(){}<>'
 
-# allow command line editing in an external editor
+editor:keys:load
 editor:load edit-command-line
 editor:load self-insert url-quote-magic
 
 # Key Bindings {{{
-
-# reset the bindings to defaults
-bindkey -d
+bindkey -d # reset the bindings to defaults
 
 for mode ('emacs' 'vi:insert'); do
-  editor:${mode}:bind "$key_info[Home]" beginning-of-line
-  editor:${mode}:bind "$key_info[End]" end-of-line
-
-  editor:${mode}:bind "$key_info[Insert]" overwrite-mode
-  editor:${mode}:bind "$key_info[Delete]" delete-char
-  editor:${mode}:bind "$key_info[Backspace]" backward-delete-char
-
-  editor:${mode}:bind "$key_info[Left]" backward-char
-  editor:${mode}:bind "$key_info[Right]" forward-char
-
-  editor:${mode}:bind "$key_info[Up]" up-line-or-history
-  editor:${mode}:bind "$key_info[Down]" down-line-or-history
-
-  editor:${mode}:bind "$key_info[PageUp]" up-line-or-history
-  editor:${mode}:bind "$key_info[PageDown]" down-line-or-history
-
-  # bind <S-Tab> to go to the previous menu item
-  editor:${mode}:bind "$key_info[BackTab]" reverse-menu-complete
+  editor:${mode}:bind 'Insert' overwrite-mode
+  editor:${mode}:bind 'Delete' delete-char
+  editor:${mode}:bind 'Backspace' backward-delete-char
 
   if zdefault -t ':zoppo:plugin:editor' dot-expansion 'yes'; then
     editor:${mode}:bind '.' expand-dot-to-parent-directory-realpath
@@ -84,67 +23,26 @@ for mode ('emacs' 'vi:insert'); do
 done
 unset mode
 
-# EMACS {{{
-for key in "$key_info[Escape]"{B,b}
-  editor:emacs:bind "$key" emacs-backward-word
-unset key
+for mode ('emacs' 'vi:insert' 'vi:normal'); do
+  editor:${mode}:bind 'Home' beginning-of-line
+  editor:${mode}:bind 'End' end-of-line
 
-for key in "$key_info[Escape]"{F,f}
-  editor:emacs:bind "$key" emacs-forward-word
-unset key
+  editor:${mode}:bind 'Left' backward-char
+  editor:${mode}:bind 'Right' forward-char
 
-editor:emacs:bind "$key_info[Escape]$key_info[Left]" emacs-backward-word
-editor:emacs:bind "$key_info[Escape]$key_info[Right]" emacs-forward-word
+  editor:${mode}:bind 'Up' up-line-or-history
+  editor:${mode}:bind 'Down' down-line-or-history
 
-# kill to the beginning of the line
-for key in "$key_info[Escape]"{K,k}
-  editor:emacs:bind "$key" backward-kill-line
-unset key
+  editor:${mode}:bind 'PageUp' up-line-or-history
+  editor:${mode}:bind 'PageDown' down-line-or-history
 
-editor:emacs:bind "$key_info[Escape]_" redo
-
-# search previous character
-editor:emacs:bind "$key_info[Control]X$key_info[Control]B" vi-find-prev-char
-
-# match bracket
-editor:emacs:bind "$key_info[Control]X$key_info[Control]]" vi-match-bracket
-
-# edit command in an external editor
-editor:emacs:bind "$key_info[Control]X$key_info[Control]E" edit-command-line
-
-if editor:is-loaded history-incremental-pattern-search-backward; then
-  editor:emacs:bind "$key_info[Control]R" history-incremental-pattern-search-backward
-  editor:emacs:bind "$key_info[Control]S" history-incremental-pattern-search-forward
-else
-  editor:emacs:bind "$key_info[Control]R" history-incremental-search-backward
-  editor:emacs:bind "$key_info[Control]S" history-incremental-search-forward
-fi
-# }}}
-
-# vi {{{
-
-# edit command in an external editor.
-editor:vi:normal:bind 'v' edit-command-line
-
-# undo/redo
-editor:vi:normal:bind 'u' undo
-editor:vi:normal:bind "$key_info[Control]R" redo
-
-# switch to command mode
-editor:vi:insert:bind 'jk' vi-cmd-mode
-editor:vi:insert:bind 'kj' vi-cmd-mode
-
-if editor:is-loaded history-incremental-pattern-search-backward; then
-  editor:vi:normal:bind '?' history-incremental-pattern-search-backward
-  editor:vi:normal:bind '/' history-incremental-pattern-search-forward
-else
-  editor:vi:normal:bind '?' history-incremental-search-backward
-  editor:vi:normal:bind '/' history-incremental-search-forward
-fi
-# }}}
+  # bind <S-Tab> to go to the previous menu item
+  editor:${mode}:bind 'BackTab' reverse-menu-complete
+done
+unset mode
 
 # Dumb Terminals {{{
-for mode ('emacs' 'vi:insert'); do
+for mode ('emacs' 'vi:insert' 'vi:normal'); do
   editor:${mode}:bind "^[[H" beginning-of-line
   editor:${mode}:bind "^[[1~" beginning-of-line
   editor:${mode}:bind "^[OH" beginning-of-line
@@ -158,6 +56,65 @@ for mode ('emacs' 'vi:insert'); do
   editor:${mode}:bind "^[3;5~" delete-char
   editor:${mode}:bind "\e[3~" delete-char
 done
+# }}}
+
+# EMACS {{{
+for key in 'Escape+'{B,b}
+  editor:emacs:bind "$key" emacs-backward-word
+unset key
+
+for key in 'Escape+'{F,f}
+  editor:emacs:bind "$key" emacs-forward-word
+unset key
+
+editor:emacs:bind Escape+Left emacs-backward-word
+editor:emacs:bind Escape+Right emacs-forward-word
+
+# kill to the beginning of the line
+for key in 'Escape+'{K,k}
+  editor:emacs:bind "$key" backward-kill-line
+unset key
+
+editor:emacs:bind 'Escape+_' redo
+
+# search previous character
+editor:emacs:bind 'Control+X Control+B' vi-find-prev-char
+
+# match bracket
+editor:emacs:bind 'Control+X Control+]' vi-match-bracket
+
+# edit command in an external editor
+editor:emacs:bind 'Control+X Control+E' edit-command-line
+
+if editor:is-loaded history-incremental-pattern-search-backward; then
+  editor:emacs:bind 'Control+R' history-incremental-pattern-search-backward
+  editor:emacs:bind 'Control+S' history-incremental-pattern-search-forward
+else
+  editor:emacs:bind 'Control+R' history-incremental-search-backward
+  editor:emacs:bind 'Control+S' history-incremental-search-forward
+fi
+# }}}
+
+# vi {{{
+
+# edit command in an external editor.
+editor:vi:normal:bind 'v' edit-command-line
+
+# undo/redo
+editor:vi:normal:bind 'u' undo
+editor:vi:normal:bind 'Control+R' redo
+
+# switch to command mode
+editor:vi:insert:bind 'jk' vi-cmd-mode
+editor:vi:insert:bind 'kj' vi-cmd-mode
+
+if editor:is-loaded history-incremental-pattern-search-backward; then
+  editor:vi:normal:bind '?' history-incremental-pattern-search-backward
+  editor:vi:normal:bind '/' history-incremental-pattern-search-forward
+else
+  editor:vi:normal:bind '?' history-incremental-search-backward
+  editor:vi:normal:bind '/' history-incremental-search-forward
+fi
 # }}}
 
 # }}}
