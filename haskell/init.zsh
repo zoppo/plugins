@@ -4,13 +4,12 @@ function {
 
   setopt LOCAL_OPTIONS EXTENDED_GLOB
 
-  # prepend Cabal per user directories to PATH/MANPATH
-  if [[ "$OSTYPE" == darwin* ]]; then
-    path=($HOME/Library/Haskell/bin(/N) $path)
-    manpath=($HOME/Library/Haskell/man(/N) $manpath)
-  else
+  if [[ -d "$HOME/.cabal" ]]; then
     path=($HOME/.cabal/bin(/N) $path)
     manpath=($HOME/.cabal/man(/N) $manpath)
+  elif [[ -d "$HOME/Library/Haskell" ]]; then
+    path=($HOME/Library/Haskell/bin(/N) $path)
+    manpath=($HOME/Library/Haskell/man(/N) $manpath)
   fi
 }
 # }}}
