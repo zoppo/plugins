@@ -1,6 +1,8 @@
 plugins:require 'editor' || return 1
 plugins:require 'history' || return 1
 
+plugins:load-if-enabled 'syntax-highlight'
+
 source-relative 'external/zsh-history-substring-search.zsh'
 
 # Options {{{
