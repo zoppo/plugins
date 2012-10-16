@@ -11,10 +11,29 @@ if [[ "$1" == '-h' || "$1" == '--help' ]]; then
 fi
 
 local remove_archive=0
-if [[ "$1" == '-r' || "$1" == '--remove' ]]; then
-  remove_archive=1
-  shift
-fi
+local verbose=0
+local arg
+
+for arg in "$@"; do
+  case "$arg" in
+    -r|--remove)
+      remove_archive=1
+      shift
+      ;;
+    -v|--verbose)
+      verbose=1
+      shift
+      ;;
+    -vr|-rv)
+      remove_archive=1
+      verbose=1
+      shift
+      ;;
+    *)
+      break
+      ;;
+  esac
+done
 
 (( $+1 )) || {
   print "$usage"
@@ -24,7 +43,7 @@ fi
 local -a extensions
 local archive
 
-archive:extensions extract
+archive:extensions extract extensions
 
 for archive ("$argv[@]"); do
   if [[ ! -s "$archive" ]]; then

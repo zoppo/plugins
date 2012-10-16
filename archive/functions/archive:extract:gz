@@ -1,9 +1,12 @@
+local v
+(( $verbose )) && v='-v'
+
 if (( $+commands[gunzip] )); then
-  gunzip "$1"
+  gunzip ${=v} "$1"
 elif (( $+commands[gzip] )); then
-  gzip -d "$1"
+  gzip ${=v} -d "$1"
 elif (( $+commands[zcat] )); then
-  zcat "$1" >! "${1:r}"
+  zcat ${=v} "$1" >! "${1:r}"
 else
   warn 'extract: you have to install gzip'
   return 1

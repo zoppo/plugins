@@ -1,5 +1,9 @@
 if (( $+commands[tar] )); then
-  tar xvzf "$1"
+  if (( $verbose )); then
+    tar xvzf "$1"
+  else
+    tar xzf "$1"
+  fi
 else
   warn 'extract: you have to install tar'
   return 1

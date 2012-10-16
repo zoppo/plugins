@@ -3,6 +3,10 @@
   return 1
 }
 
-tar xvf "$1"
+if (( $verbose )); then
+  tar xvf "$1"
+else
+  tar xf "$1"
+fi
 
 # vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}

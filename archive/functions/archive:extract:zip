@@ -1,5 +1,9 @@
 if (( $+commands[unzip] )); then
-  unzip "$1" -d "${1:t:r}"
+  if (( $verbose )); then
+    unzip -v "$1" -d "${1:t:r}"
+  else
+    unzip "$1" -d "${1:t:r}"
+  fi
 else
   warn 'extract: you have to install unzip'
   return 1
