@@ -1,4 +1,15 @@
-typeset -ga extensions
+(( $+2 )) || {
+  warn 'archive:extensions: not enough arguments'
+  return 1
+}
+
+
+if [[ "$2" = extensions ]]; then
+  typeset -ga extensions
+else
+  local -a extensions
+fi
+
 local -a disable
 local name
 
@@ -17,5 +28,8 @@ for name ("${(@k)functions}"); do
 done
 
 sort_by_length extensions
+
+[[ "$2" != extensions ]] && \
+  set -A "$2" "${extensions[@]}"
 
 # vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}
