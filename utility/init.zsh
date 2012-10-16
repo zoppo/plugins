@@ -15,7 +15,7 @@ fi
 # }}}
 
 # GNU utilities {{{
-if zstyle -t ':zoppo:plugin:utility:gnu' enable; then
+if zdefault -t ':zoppo:plugin:utility:gnu' enable 'no'; then
   function {
     local prefix
     local -a binaries
