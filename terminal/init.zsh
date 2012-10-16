@@ -3,13 +3,13 @@ if terminal:is-dumb; then
 fi
 
 function terminal:title:precmd {
-  if zstyle -t ':zoppo:plugin:terminal' auto-title; then
+  if zdefault -t ':zoppo:plugin:terminal' auto-title 'no'; then
     terminal:title-with-path
   fi
 }
 
 function terminal:title:preexec {
-  if zstyle -t ':zoppo:plugin:terminal' auto-title; then
+  if zdefault -t ':zoppo:plugin:terminal' auto-title 'no'; then
     terminal:title-with-command "$2"
   fi
 }
