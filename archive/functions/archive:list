@@ -24,7 +24,7 @@ fi
 local -a extensions
 local archive
 
-archive:extensions list
+archive:extensions list extensions
 
 for archive ("$argv[@]"); do
   if [[ ! -s "$archive" ]]; then
