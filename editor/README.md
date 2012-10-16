@@ -2,8 +2,18 @@ Editor
 ======
 The editor plugin sets various keybindings and other editor goodies.
 
+Dumb Terminals
+--------------
+There's some dumb terminal support, not all terminals are smart
+enough to provide correct terminfos, so zoppo tries to fix that
+adding various known key bindings.
+
+You can enable/disable this feature, as usual.
+
+    zstyle ':zoppo:plugin:editor' dumb 'no'
+
 Editor Mode
--------------------
+-----------
 You can either set `emacs` or `vi` mode.
 
 The default is `emacs`.
