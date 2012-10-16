@@ -1,5 +1,8 @@
+plugins:load-if-enabled 'utility'
+
 if zdefault -t ':zoppo:plugin:command-not-found' no-correct 'no'; then
-  unsetopt CORRECT CORRECT_ALL
+  options:disable correct
+  options:disable correct-all
 fi
 
 if [[ -s '/etc/zsh_command_not_found' ]]; then
