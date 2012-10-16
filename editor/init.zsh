@@ -41,41 +41,24 @@ for mode ('emacs' 'vi:insert' 'vi:normal'); do
 done
 unset mode
 
-# Dumb Terminals {{{
-for mode ('emacs' 'vi:insert' 'vi:normal'); do
-  editor:${mode}:bind "^[[H" beginning-of-line
-  editor:${mode}:bind "^[[1~" beginning-of-line
-  editor:${mode}:bind "^[OH" beginning-of-line
-
-  editor:${mode}:bind "^[[F"  end-of-line
-  editor:${mode}:bind "^[[4~" end-of-line
-  editor:${mode}:bind "^[OF" end-of-line
-
-  editor:${mode}:bind '^?' backward-delete-char
-  editor:${mode}:bind "^[[3~" delete-char
-  editor:${mode}:bind "^[3;5~" delete-char
-  editor:${mode}:bind "\e[3~" delete-char
-done
-# }}}
-
 # EMACS {{{
-for key in 'Escape+'{B,b}
+for key in 'Alt+'{B,b}
   editor:emacs:bind "$key" emacs-backward-word
 unset key
 
-for key in 'Escape+'{F,f}
+for key in 'Alt+'{F,f}
   editor:emacs:bind "$key" emacs-forward-word
 unset key
 
-editor:emacs:bind Escape+Left emacs-backward-word
-editor:emacs:bind Escape+Right emacs-forward-word
+editor:emacs:bind Alt+Left emacs-backward-word
+editor:emacs:bind Alt+Right emacs-forward-word
 
 # kill to the beginning of the line
-for key in 'Escape+'{K,k}
+for key in 'Alt+'{K,k}
   editor:emacs:bind "$key" backward-kill-line
 unset key
 
-editor:emacs:bind 'Escape+_' redo
+editor:emacs:bind 'Alt+_' redo
 
 # search previous character
 editor:emacs:bind 'Control+X Control+B' vi-find-prev-char
@@ -93,10 +76,36 @@ else
   editor:emacs:bind 'Control+R' history-incremental-search-backward
   editor:emacs:bind 'Control+S' history-incremental-search-forward
 fi
+
+# Dumb Terminals {{{
+if zdefault -t ':zoppo:plugin:editor' dumb 'yes'; then
+  editor:emacs:bind "^[[H" beginning-of-line
+  editor:emacs:bind "^[[1~" beginning-of-line
+  editor:emacs:bind "^[OH" beginning-of-line
+
+  editor:emacs:bind "^[[F"  end-of-line
+  editor:emacs:bind "^[[4~" end-of-line
+  editor:emacs:bind "^[OF" end-of-line
+
+  editor:emacs:bind '^?' backward-delete-char
+  editor:emacs:bind "^[[3~" delete-char
+  editor:emacs:bind "^[3;5~" delete-char
+  editor:emacs:bind "\e[3~" delete-char
+
+  editor:emacs:bind '^[[5D' emacs-backward-word
+  editor:emacs:bind '^[[5C' emacs-forward-word
+  editor:emacs:bind ';5D' emacs-backward-word
+  editor:emacs:bind ';5C' emacs-forward-word
+  editor:emacs:bind '^[[1;3D' emacs-backward-word
+  editor:emacs:bind '^[[1;3C' emacs-forward-word
+  editor:emacs:bind '^[[1;5D' emacs-backward-word
+  editor:emacs:bind '^[[1;5C' emacs-forward-word
+fi
+# }}}
+
 # }}}
 
 # vi {{{
-
 # edit command in an external editor.
 editor:vi:normal:bind 'v' edit-command-line
 
@@ -115,6 +124,24 @@ else
   editor:vi:normal:bind '?' history-incremental-search-backward
   editor:vi:normal:bind '/' history-incremental-search-forward
 fi
+
+# Dumb Terminals {{{
+if zdefault -t ':zoppo:plugin:editor' dumb 'yes'; then
+  editor:vi:insert:bind "^[[H" beginning-of-line
+  editor:vi:insert:bind "^[[1~" beginning-of-line
+  editor:vi:insert:bind "^[OH" beginning-of-line
+
+  editor:vi:insert:bind "^[[F"  end-of-line
+  editor:vi:insert:bind "^[[4~" end-of-line
+  editor:vi:insert:bind "^[OF" end-of-line
+
+  editor:vi:insert:bind '^?' backward-delete-char
+  editor:vi:insert:bind "^[[3~" delete-char
+  editor:vi:insert:bind "^[3;5~" delete-char
+  editor:vi:insert:bind "\e[3~" delete-char
+fi
+# }}}
+
 # }}}
 
 # }}}

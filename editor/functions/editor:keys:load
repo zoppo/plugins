@@ -4,6 +4,7 @@ typeset -gA key_info
 key_info=(
   'Control'   '\C-'
   'Escape'    '\e'
+  'Alt'       '\e'
   'Meta'      '\M-'
   'Backspace' '^?'
   'Delete'    '^[[3~'
