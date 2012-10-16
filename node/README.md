@@ -6,7 +6,7 @@ completion.
 The provided helpers are `node:version` and `node:npm:version`.
 
 npm Completion
-------------------------
+--------------
 You can enable/disable npm completion.
 
 The default is enabled'
