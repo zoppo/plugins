@@ -2,22 +2,20 @@ if terminal:is-dumb; then
   return 1
 fi
 
-functions:autoload add-zsh-hook
-
-function terminal:precmd:title {
+function terminal:title:precmd {
   if zstyle -t ':zoppo:plugin:terminal' auto-title; then
     terminal:title-with-path
   fi
 }
 
-function terminal:preexec:title {
+function terminal:title:preexec {
   if zstyle -t ':zoppo:plugin:terminal' auto-title; then
     terminal:title-with-command "$2"
   fi
 }
 
-add-zsh-hook precmd terminal:precmd:title
-add-zsh-hook preexec terminal:preexec:title
+hooks:add precmd terminal:title:precmd
+hooks:add preexec terminal:title:preexec
 
 if functions:autoload colors && colors && terminal:colors 256; then
   typeset -gA fx fg bg
@@ -64,7 +62,7 @@ if functions:autoload colors && colors && terminal:colors 256; then
     fg[$color]="\e[38;5;${color}m"
     bg[$color]="\e[48;5;${color}m"
   done
-  unset color index
+  unset color
 fi
 
 # vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}
