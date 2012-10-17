@@ -12,13 +12,13 @@ local rdir="${1:t:r}"
 local rpath="${1:a}"
 
 mkdir -p "$rdir/control"
-mkdir -o "$rdir/data"
+mkdir -p "$rdir/data"
 
 local v
 (( $verbose )) && v='v'
 
 cd "$rdir"
-ar ${v}x "$rpath" >/dev/null
+ar ${v}x "$rpath"
 
 cd control
 tar xz${v}f ../control.tar.gz
