@@ -56,7 +56,7 @@ for archive ("$argv[@]"); do
     continue
   fi
 
-  local success=1
+  local failure=1
   local ext
   for ext ("$extensions[@]"); do
     if [[ "$archive" == *.$ext ]]; then
@@ -65,14 +65,14 @@ for archive ("$argv[@]"); do
           rm -f "$archive"
         fi
 
-        success=0
+        failure=0
       fi
 
       break
     fi
   done
 
-  if (( $success )); then
+  if (( $failure )); then
     warn "$0: cannot extract: $archive"
   fi
 done
