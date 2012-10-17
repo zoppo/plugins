@@ -1,3 +1,4 @@
+# SSH Agent {{{
 if is-callable ssh-agent; then
   function agent:ssh:start {
     local env="$1"
@@ -36,7 +37,9 @@ if is-callable ssh-agent; then
     fi
   fi
 fi
+# }}}
 
+# GPG Agent {{{
 if is-callable gpg-agent; then
   function agent:gpg:start {
     local env="$1"
@@ -60,5 +63,6 @@ if is-callable gpg-agent; then
     agent:gpg:start "$HOME/.gnupg/gpg-agent.env"
   fi
 fi
+# }}}
 
 # vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}
