@@ -3,10 +3,12 @@ if terminal:is-dumb; then
 fi
 
 functions:add-relative 'external/src'
-functions:autoload compinit
 
 function completion:init {
+  functions:autoload compinit zrecompile
+
   compinit -i
+  zrecompile -p "${ZDOTDIR:-$HOME}/.zcompdump" &!
 }
 
 hooks:add zoppo_postinit completion:init
