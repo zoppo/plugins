@@ -173,19 +173,4 @@ alias copy='pbc'
 alias paste='pbp'
 # }}}
 
-# sprunge.us {{{
-if is-callable curl && is-callable cat; then
-  alias sprunge="curl -F'sprunge=<-' sprunge.us"
-
-  function sprunger {
-    (( $+1 )) || {
-      warn "USAGE: ${0:t} <file>"
-      return 1
-    }
-
-    print "${${${:-"$(cat "$1" | sprunge)"}%%*( )}##*( )}"
-  }
-fi
-# }}}
-
 # vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}
