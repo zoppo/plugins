@@ -2,6 +2,9 @@ if terminal:is-dumb; then
   return 1
 fi
 
+plugins:load-if-enabled 'utility'
+
+# Setup Completion {{{
 functions:add-relative 'external/src'
 
 function completion:init {
@@ -12,6 +15,7 @@ function completion:init {
 }
 
 hooks:add zoppo_postinit completion:init
+# }}}
 
 # Options {{{
 function {
