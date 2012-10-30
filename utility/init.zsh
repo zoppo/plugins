@@ -120,6 +120,19 @@ function {
 }
 # }}}
 
+# Ignore From History {{{
+function {
+  local programs
+  local program
+
+  zdefault -a ':zoppo:plugin:utility' no-history programs \
+    'poweroff' 'halt' 'reboot'
+
+  for program ("$programs[@]")
+    alias "$program"=" $program"
+}
+# }}}
+
 # Enable Interactive {{{
 function {
   local programs
