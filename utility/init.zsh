@@ -94,6 +94,24 @@ if zstyle -t ':zoppo:plugin:utility:grep' color; then
 fi
 # }}}
 
+# whatis {{{
+if (( $+commands[whatis] )) && zdefault -t ':zoppo' easter-egg 'true'; then
+  function whatis() {
+    local arg
+    for arg ("$argv[@]"); do
+      case "$arg" in
+        [Ll][Oo][Vv][Ee])
+          echo "$arg: Baby don't hurt me, don't hurt me, no more"
+          ;;
+        *)
+          command whatis "$arg"
+          ;;
+      esac
+    done
+  }
+fi
+# }}}
+
 # Disable Correction {{{
 function {
   local programs
