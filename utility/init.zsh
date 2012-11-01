@@ -1,4 +1,6 @@
-options:enable 'correct'
+if zdefault -t ':zoppo:plugin:utility' auto-correct 'yes'; then
+  options:enable 'correct'
+fi
 
 # ZSH utilities {{{
 if zdefault -t ':zoppo:plugin:utility:zsh' enable 'yes'; then
