@@ -16,3 +16,6 @@
 [submodule "fasd/external"]
 	path = fasd/external
 	url = git://github.com/clvv/fasd.git
+[submodule "sudo"]
+	path = sudo
+	url = git://github.com/zoppo/sudo.git
