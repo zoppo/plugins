@@ -1,5 +1,10 @@
 if zdefault -t ':zoppo:plugin:utility' auto-correct 'yes'; then
   options:enable 'correct'
+
+  if ! terminal:is-dumb; then
+    # so we get nice colors with auto-correction
+    SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
+  fi
 fi
 
 # ZSH utilities {{{
