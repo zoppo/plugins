@@ -1,7 +1,9 @@
-if [[ -z "$DISPLAY" && -S '/tmp/.X11-unix/X0' ]]; then
-  : ${DISPLAY:=:0.0}
-  : ${XAUTHORITY:=$HOME/.Xauthority}
+if [[ ! -S '/tmp/.X11-unix/X0' ]]; then
+  return
 fi
+
+: ${DISPLAY:=:0.0}
+: ${XAUTHORITY:=$HOME/.Xauthority}
 
 if [[ ! -e "$(path:cache)/X" ]] || \
    [[ "${ZDOTDIR:-$HOME}/.zopporc" -nt "$(path:cache)/X" ]] || \
