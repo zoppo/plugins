@@ -7,7 +7,11 @@ if is-callable ssh-agent; then
     if [[ -s "$env" ]]; then
       source "$env" &> /dev/null
 
-      ps -ef | grep "$SSH_AGENT_PID" | grep -q 'ssh-agent$' && return 0
+      if is-callable pgrep; then
+        (( $(pgrep -U "$USER" ssh-agent) == SSH_AGENT_PID )) && return 0
+      else
+        ps -ef | grep -q " $SSH_AGENT_PID .* ssh-agent$" && return 0
+      fi
     fi
 
     # start ssh-agent and setup the environment
@@ -47,7 +51,11 @@ if is-callable gpg-agent; then
     if [[ -s "$env" ]]; then
       source "$env" &> /dev/null
 
-      ps -ef | grep "$SSH_AGENT_PID" | grep -q 'gpg-agent' && return 0
+      if is-callable pgrep; then
+        (( $(pgrep -U "$USER" gpg) == SSH_AGENT_PID )) && return 0
+      else
+        ps -ef | grep -q " $SSH_AGENT_PID .* gpg-agent$" && return 0
+      fi
     fi
 
     gpg-agent --daemon --write-env-file "$env" &> /dev/null
