@@ -10,11 +10,16 @@ functions:add-relative 'external/src'
 function completion:init {
   functions:autoload compinit zrecompile
 
-  compinit -i
+  compinit -i -C
   zrecompile -q -p "${ZDOTDIR:-$HOME}/.zcompdump" &!
 }
 
+function completion:updated {
+  rm -f "${ZDOTDIR:-$HOME}/.zcompdump{,.zwc}"
+}
+
 hooks:add zoppo_postinit completion:init
+hooks:add zoppo_updated completion:update
 # }}}
 
 # Options {{{
