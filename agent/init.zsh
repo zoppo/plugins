@@ -8,7 +8,7 @@ if is-callable ssh-agent; then
       source "$env" &> /dev/null
 
       if is-callable pgrep; then
-        (( $(pgrep -U "$USER" ssh-agent) == SSH_AGENT_PID )) && return 0
+        (( ${$(pgrep -U "$USER" ssh-agent):-0} == SSH_AGENT_PID )) && return 0
       else
         ps -ef | grep -q " $SSH_AGENT_PID .* ssh-agent$" && return 0
       fi
@@ -52,7 +52,7 @@ if is-callable gpg-agent; then
       source "$env" &> /dev/null
 
       if is-callable pgrep; then
-        (( $(pgrep -U "$USER" gpg) == SSH_AGENT_PID )) && return 0
+        (( ${$(pgrep -U "$USER" gpg):-0} == SSH_AGENT_PID )) && return 0
       else
         ps -ef | grep -q " $SSH_AGENT_PID .* gpg-agent$" && return 0
       fi
