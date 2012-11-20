@@ -2,7 +2,7 @@
 
 local -a extensions
 
-archive:extensions list
+archive:extensions list extensions
 
 _arguments \
   '(-v --verbose)'{-v,--verbose}'[verbose output]' \
