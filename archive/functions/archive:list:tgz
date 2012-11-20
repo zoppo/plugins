@@ -7,7 +7,7 @@ fi
 if (( $+commands[tar] )); then
   tar t${verbose:+v}zf "$1"
 else
-  warn 'list: you have to install tar'
+  warn 'archive:list: you have to install tar'
   return 1
 fi
 

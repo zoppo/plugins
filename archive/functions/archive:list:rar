@@ -9,7 +9,7 @@ if (( $+commands[unrar] )); then
 elif (( $+commands[rar] )); then
   rar ${${verbose:+v}:-lb} "$1"
 else
-  warn 'list: you have to install unrar or rar'
+  warn 'archive:list: you have to install unrar or rar'
   return 1
 fi
 

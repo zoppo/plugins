@@ -1,5 +1,5 @@
 (( $+commands[tar] )) || {
-  warn 'list: you have to install tar'
+  warn 'archive:list: you have to install tar'
   return 1
 }
 
@@ -18,7 +18,7 @@ elif (( $+commands[unlzma] )); then
 elif (( $+commands[lzcat] )); then
   lzcat "$1" | tar t${verbose:+v}f -
 else
-  warn 'list: you have to install an lzma-compatible version of tar or lzma'
+  warn 'archive:list: you have to install an lzma-compatible version of tar or lzma'
   return 1
 fi
 
