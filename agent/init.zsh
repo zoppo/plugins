@@ -58,7 +58,7 @@ if is-callable gpg-agent; then
       fi
     fi
 
-    gpg-agent --daemon --write-env-file "$env" &> /dev/null
+    gpg-agent --enable-ssh-support --daemon --write-env-file "$env" &> /dev/null
 
     chmod 600 "$env"
     source "$env" &> /dev/null
