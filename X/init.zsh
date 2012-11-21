@@ -10,19 +10,21 @@ if [[ -z "$XAUTHORITY" ]]; then
   export XAUTHORITY="$HOME/.Xauthority"
 fi
 
+if [[ -e "$(path:cache)/X.lock" ]]; then
+  return
+fi
+
+touch "$(path:cache)/X.lock"
+
+if ! ([[ ! -e "$(path:cache)/X" ]] || \
+   [[ "${ZDOTDIR:-$HOME}/.zopporc" -nt "$(path:cache)/X" ]] || \
+   [[ '/tmp/.X11-unix/X0'          -nt "$(path:cache)/X" ]]) \
+then
+  rm -f "$(path:cache)/X.lock"
+  return
+fi
+
 (function {
-  # this is required so we don't clash with other concurrently opened shells
-  sleep $(( (RANDOM % 10) / 100.0 ))
-
-  if [[ ! -e "$(path:cache)/X" ]] || \
-     [[ "${ZDOTDIR:-$HOME}/.zopporc" -nt "$(path:cache)/X" ]] || \
-     [[ '/tmp/.X11-unix/X0'          -nt "$(path:cache)/X" ]] \
-  then
-    touch "$(path:cache)/X"
-  else
-    return
-  fi
-
   if zstyle -t ':zoppo:plugin:X:screen' saver; then
     xscreensaver &> /dev/null &!
   elif zstyle -s ':zoppo:plugin:X:screen' saver saver; then
@@ -77,6 +79,9 @@ fi
 
     unset idle
   fi
+
+  rm -f "$(path:cache)/X.lock"
+  touch "$(path:cache)/X"
 }) &!
 
 # vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}
