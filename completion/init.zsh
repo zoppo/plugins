@@ -19,7 +19,7 @@ function completion:updated {
 }
 
 hooks:add zoppo_postinit completion:init
-hooks:add zoppo_updated completion:update
+hooks:add zoppo_updated completion:updated
 # }}}
 
 # Options {{{
