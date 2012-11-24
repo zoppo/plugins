@@ -10,19 +10,30 @@ if [[ -z "$XAUTHORITY" ]]; then
   export XAUTHORITY="$HOME/.Xauthority"
 fi
 
-if [[ -e "$(path:cache)/X.lock" ]]; then
-  return
-fi
+# I wish this wasn't required ( ͡° ͜ʖ ͡°)
+function {
+  integer fd
+  integer ret=0
 
-touch "$(path:cache)/X.lock"
+  exec {fd}>!"$(path:cache)/X.lock"
 
-if ! ([[ ! -e "$(path:cache)/X" ]] || \
-   [[ "${ZDOTDIR:-$HOME}/.zopporc" -nt "$(path:cache)/X" ]] || \
-   [[ '/tmp/.X11-unix/X0'          -nt "$(path:cache)/X" ]]) \
-then
-  rm -f "$(path:cache)/X.lock"
-  return
-fi
+  if flock -nx $fd; then
+    if [[ ! -e "$(path:cache)/X" ]] || \
+       [[ "${ZDOTDIR:-$HOME}/.zopporc" -nt "$(path:cache)/X" ]] || \
+       [[ '/tmp/.X11-unix/X0' -nt "$(path:cache)/X" ]]
+    then
+      touch "$(path:cache)/X"
+    else
+      ret=1
+    fi
+  else
+    ret=1
+  fi
+
+  exec {fd}>&-
+
+  return $ret
+} || return
 
 (function {
   if zstyle -t ':zoppo:plugin:X:screen' saver; then
@@ -79,9 +90,6 @@ fi
 
     unset idle
   fi
-
-  rm -f "$(path:cache)/X.lock"
-  touch "$(path:cache)/X"
 }) &!
 
 # vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}
