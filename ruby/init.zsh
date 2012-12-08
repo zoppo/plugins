@@ -33,4 +33,17 @@ if zdefault -t ':zoppo:plugin:ruby:rbenv' enable 'no'; then
 fi
 # }}}
 
+function {
+  local GPATH
+  typeset -ga path
+
+  if (( $+commands[ruby] )); then
+    ruby -rubygems -e 'puts Gem.path' | \
+      while read GPATH; do
+        path+=("$GPATH/bin")
+      done
+    path=($^path(N-/))
+  fi
+}
+
 # vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}
