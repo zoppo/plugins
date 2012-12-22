@@ -171,6 +171,19 @@ function {
 }
 # }}}
 
+# Wrap In Readline {{{
+is-callable rlwrap && function {
+  local programs
+  local program
+
+  zdefault -a ':zoppo:plugin:utility' readline programs \
+    'nc' 'telnet' 'sbcl' 'tclsh' 'mzscheme'
+
+  for program ("$programs[@]")
+    alias "$program"="rlwrap -c -D -r $program"
+}
+# }}}
+
 # Directory Stuff {{{
 alias+ mkdir '-p'
 alias md='mkdir'
