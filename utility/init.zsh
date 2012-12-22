@@ -169,7 +169,6 @@ function {
   for program ("$programs[@]")
     alias+ "$program" '-i'
 }
-
 # }}}
 
 # Directory Stuff {{{
