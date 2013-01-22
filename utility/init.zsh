@@ -177,10 +177,10 @@ is-callable rlwrap && function {
   local program
 
   zdefault -a ':zoppo:plugin:utility' readline programs \
-    'nc' 'telnet' 'sbcl' 'tclsh' 'mzscheme'
+    'nc' 'telnet' 'sbcl' 'tclsh' 'mzscheme' 'iex' 'mix'
 
   for program ("$programs[@]")
-    alias "$program"="rlwrap -c -D -r $program"
+    alias "$program"="rlwrap -a -H '$(path:cache)/$program.history' -c -D 2 -r $program"
 }
 # }}}
 
