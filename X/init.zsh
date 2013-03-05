@@ -47,7 +47,7 @@ function {
   fi
 
   if zstyle -s ':zoppo:plugin:X:screen:redshift' location location; then
-    redshift -l "$longitude" &> /dev/null &!
+    redshift -l "$location" &> /dev/null &!
   fi
 
   if zstyle -s ':zoppo:plugin:X:keyboard' language language; then
