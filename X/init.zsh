@@ -51,7 +51,7 @@ function {
   fi
 
   if zstyle -s ':zoppo:plugin:X:keyboard' language language; then
-    setxkbmap "$language"
+    setxkbmap ${=language}
     unset language
   fi
 
