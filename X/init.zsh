@@ -37,7 +37,7 @@ function {
 
 (function {
   if zstyle -t ':zoppo:plugin:X:screen' saver; then
-    xscreensaver &> /dev/null &!
+    xscreensaver -no-splash &> /dev/null &!
   elif zstyle -s ':zoppo:plugin:X:screen' saver saver; then
     case "$saver" in
       *) ;;
