@@ -119,6 +119,18 @@ if (( $+commands[whatis] )) && zdefault -t ':zoppo' easter-egg 'true'; then
 fi
 # }}}
 
+# math {{{
+if zdefault -t ':zoppo:plugin:utility:math' enable 'yes'; then
+  zmodload zsh/mathfunc
+
+  function math {
+    echo $((${=@}))
+  }
+
+  alias m="noglob math"
+fi
+# }}}
+
 # Disable Correction {{{
 function {
   local programs
