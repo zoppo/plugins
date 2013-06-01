@@ -9,6 +9,74 @@ editor:keys:load
 editor:load edit-command-line
 editor:load self-insert url-quote-magic
 
+# Editor Information {{{
+function editor-info {
+  unset editor_info
+  typeset -gA editor_info
+
+  editor_info[keymap]="$KEYMAP"
+  editor_info[state]="$ZLE_STATE"
+
+  zle reset-prompt
+  zle -R
+}
+zle -N editor-info
+
+# Ensures that $terminfo values are valid and updates editor information when
+# the keymap changes.
+function zle-keymap-select zle-line-init zle-line-finish {
+  # The terminal must be in application mode when ZLE is active for $terminfo
+  # values to be valid.
+  if (( $+terminfo[smkx] && $+terminfo[rmkx] )); then
+    case "$0" in
+      (zle-line-init)
+        # Enable terminal application mode.
+        echoti smkx
+      ;;
+
+      (zle-line-finish)
+        # Disable terminal application mode.
+        echoti rmkx
+      ;;
+    esac
+  fi
+
+  zle editor-info
+}
+zle -N zle-keymap-select
+zle -N zle-line-finish
+zle -N zle-line-init
+
+# Toggles emacs overwrite mode and updates editor information.
+function overwrite-mode {
+  zle .overwrite-mode
+  zle editor-info
+}
+zle -N overwrite-mode
+
+# Enters vi insert mode and updates editor information.
+function vi-insert {
+  zle .vi-insert
+  zle editor-info
+}
+zle -N vi-insert
+
+# Moves to the first non-blank character then enters vi insert mode and updates
+# editor information.
+function vi-insert-bol {
+  zle .vi-insert-bol
+  zle editor-info
+}
+zle -N vi-insert-bol
+
+# Enters vi replace mode and updates editor information.
+function vi-replace  {
+  zle .vi-replace
+  zle editor-info
+}
+zle -N vi-replace
+# }}}
+
 # Key Bindings {{{
 bindkey -d # reset the bindings to defaults
 
