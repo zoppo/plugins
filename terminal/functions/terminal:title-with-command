@@ -18,7 +18,7 @@ if [[ "${1[(w)1]}" == (fg|%*)(\;|) ]]; then
   jobs $job_name 2>/dev/null > >(
     read index discarded
     # the index is already surrounded by brackets: [1]
-    set-titles-with-command "${(e):-\$jobtexts_from_parent_shell$index}"
+    terminal:title-with-command "${(e):-\$jobtexts_from_parent_shell$index}"
   )
 else
   # set the command name, or in the case of sudo or ssh, the next command
@@ -27,10 +27,10 @@ else
   unset MATCH
 
   if [[ "$TERM" == screen* ]]; then
-    set-screen-window-title "$truncated_cmd"
+    terminal:screen:window-title "$truncated_cmd"
   else
-    set-terminal-window-title "$cmd"
-    set-terminal-tab-title "$truncated_cmd"
+    terminal:window-title "$cmd"
+    terminal:tab-title "$truncated_cmd"
   fi
 fi
 

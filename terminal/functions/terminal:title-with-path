@@ -10,10 +10,10 @@ else
   unset MATCH
 
   if [[ "$TERM" == screen* ]]; then
-    set-screen-window-title "$truncated_path"
+    terminal:screen:window-title "$truncated_path"
   else
-    set-terminal-window-title "$abbreviated_path"
-    set-terminal-tab-title "$truncated_path"
+    terminal:window-title "$abbreviated_path"
+    terminal:tab-title "$truncated_path"
   fi
 fi
 
