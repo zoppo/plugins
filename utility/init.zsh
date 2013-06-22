@@ -192,7 +192,7 @@ is-callable rlwrap && function {
     'nc' 'telnet' 'sbcl' 'tclsh' 'mzscheme' 'iex' 'mix'
 
   for program ("$programs[@]")
-    alias "$program"="rlwrap -a -H '$(path:cache)/$program.history' -c -D 2 -r $program"
+    alias "$program"="rlwrap --always-readline -H '$(path:cache)/$program.history' -c -D 2 -r $program"
 }
 # }}}
 
