@@ -10,6 +10,10 @@ zdefault -s ':zoppo:plugin:fasd' max _FASD_MAX 2000
 zdefault -a ':zoppo:plugin:fasd' backends _FASD_BACKENDS 'native'
 zdefault -s ':zoppo:plugin:fasd' fuzzy _FASD_FUZZY 2
 
-eval "$(fasd --init zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install posix-alias)"
+function fasd:init {
+  eval "$(fasd --init zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install posix-alias)"
+}
+
+hooks:add zoppo_postinit fasd:init
 
 # vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}
