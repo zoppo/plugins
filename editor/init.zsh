@@ -181,10 +181,6 @@ editor:vi:normal:bind 'v' edit-command-line
 editor:vi:normal:bind 'u' undo
 editor:vi:normal:bind 'Control+R' redo
 
-# switch to command mode
-editor:vi:insert:bind 'jk' vi-cmd-mode
-editor:vi:insert:bind 'kj' vi-cmd-mode
-
 if editor:is-loaded history-incremental-pattern-search-backward; then
   editor:vi:normal:bind '?' history-incremental-pattern-search-backward
   editor:vi:normal:bind '/' history-incremental-pattern-search-forward
