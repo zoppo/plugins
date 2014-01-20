@@ -28,7 +28,7 @@ function zle-keymap-select zle-line-init zle-line-finish {
   # The terminal must be in application mode when ZLE is active for $terminfo
   # values to be valid.
   if (( $+terminfo[smkx] && $+terminfo[rmkx] )); then
-    case "$0" in
+    case "$WIDGET" in
       (zle-line-init)
         # Enable terminal application mode.
         echoti smkx
