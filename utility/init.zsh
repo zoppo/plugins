@@ -235,4 +235,19 @@ alias copy='pbc'
 alias paste='pbp'
 # }}}
 
+# Fork {{{
+zdefault ':zoppo:plugin:utility:fork' programs \
+  'firefox' 'thunderbird' 'eog' 'ristretto' 'thunar' 'evince' 'vlc' 'urxvt'
+
+if zdefault -t ':zoppo:plugin:utility:fork' enable 'yes'; then
+  zstyle -a ':zoppo:plugin:utility:fork' programs programs
+
+  for cmd ("$programs[@]"); do
+    eval "function $cmd {
+      fork command $cmd \"\$@\"
+    }"
+  done
+fi
+# }}}
+
 # vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}
