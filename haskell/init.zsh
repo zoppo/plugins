@@ -2,7 +2,7 @@
 function {
   typeset -gU path manpath
 
-  setopt LOCAL_OPTIONS EXTENDED_GLOB
+  setopt LOCAL_OPTIONS EXTENDED_GLOB BARE_GLOB_QUAL
 
   if [[ -d "$HOME/.cabal" ]]; then
     path=($HOME/.cabal/bin(/N) $path)

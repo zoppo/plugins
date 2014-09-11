@@ -5,7 +5,7 @@ if [[ "$TERM_PROGRAM" == 'Apple_Terminal' ]]; then
 fi
 
 emulate -L zsh
-setopt LOCAL_OPTIONS EXTENDED_GLOB
+setopt LOCAL_OPTIONS EXTENDED_GLOB BARE_GLOB_QUAL
 
 # get the command name that is under job control
 if [[ "${1[(w)1]}" == (fg|%*)(\;|) ]]; then

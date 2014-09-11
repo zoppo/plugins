@@ -1,4 +1,4 @@
-setopt LOCAL_OPTIONS EXTENDED_GLOB
+setopt LOCAL_OPTIONS EXTENDED_GLOB BARE_GLOB_QUAL
 
 local absolute_path="${${1:a}:-$PWD}"
 

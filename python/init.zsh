@@ -2,7 +2,7 @@
 function {
   typeset -gU path manpath
 
-  setopt LOCAL_OPTIONS EXTENDED_GLOB
+  setopt LOCAL_OPTIONS EXTENDED_GLOB BARE_GLOB_QUAL
 
   # prepend PEP 370 per user site packages directory, which defaults to
   # ~/Library/Python on Mac OS X and ~/.local elsewhere, to PATH/MANPATH
