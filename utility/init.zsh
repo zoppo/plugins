@@ -93,7 +93,7 @@ fi
 # grep {{{
 if zstyle -t ':zoppo:plugin:utility:grep' color; then
   function grep {
-    exec grep --color=auto $@
+    command grep --color=auto $@
   }
 
   zstyle -s ':zoppo:plugin:utility:grep' highlight-color GREP_COLOR
