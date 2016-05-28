@@ -57,10 +57,16 @@ function {
 
   if zstyle -s ':zoppo:plugin:X:keyboard' input input; then
     case "$input" in
-      ibus) ibus-daemon --xim &> /dev/null &! ;;
+      ibus)
+        ibus-daemon --xim &> /dev/null &!
+        ;;
     esac
 
     unset input
+  fi
+
+  if zstyle -s ':zoppo:plugin:X:keyboard' option option; then
+    setxkbmap -option "${option}"
   fi
 
   if zstyle -t ':zoppo:plugin:X:keyboard' auto-repeat 'no'; then
