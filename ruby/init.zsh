@@ -38,7 +38,7 @@ function {
   typeset -ga path
 
   if (( $+commands[ruby] )); then
-    ruby -rubygems -e 'puts Gem.path' | \
+    ruby -rrubygems -e 'puts Gem.path' | \
       while read GPATH; do
         path+=("$GPATH/bin")
       done
