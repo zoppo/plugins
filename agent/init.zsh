@@ -56,7 +56,7 @@ if is-callable gpg-agent; then
 
     gpg-agent --daemon --write-env-file "$env" &> /dev/null
 
-    chmod 600 "$env"
+    chmod 600 "$env" &> /dev/null
     source "$env" &> /dev/null
 
     export GPG_AGENT_INFO
