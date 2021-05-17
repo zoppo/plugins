@@ -19,3 +19,6 @@
 [submodule "sudo"]
 	path = sudo
 	url = git://github.com/zoppo/sudo.git
+[submodule "async/external"]
+	path = async/external
+	url = git@github.com:mafredri/zsh-async.git
