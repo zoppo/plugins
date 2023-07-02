@@ -1,20 +1,3 @@
-# npm Completion {{{
-if zdefault -t ':zoppo:plugin:node:npm' enable 'yes'; then
-  function {
-    local cache
-    zdefault -s ':zoppo:plugin:node:npm' cache cache "$(path:cache)/npm.zsh"
-
-    if is-callable npm; then
-      if [[ "$commands[npm]" -nt "$cache" || ! -s "$cache" ]]; then
-        npm completion >! "$cache" &> /dev/null
-      fi
-
-      source "$cache"
-    fi
-  }
-fi
-# }}}
-
 # NVM {{{
 if zdefault -t ':zoppo:plugin:node:nvm' enable 'no'; then
   function {
@@ -28,6 +11,23 @@ if zdefault -t ':zoppo:plugin:node:nvm' enable 'no'; then
 
     if plugins:load-if-enabled 'completion'; then
       [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+    fi
+  }
+fi
+# }}}
+
+# npm Completion {{{
+if zdefault -t ':zoppo:plugin:node:npm' enable 'yes'; then
+  function {
+    local cache
+    zdefault -s ':zoppo:plugin:node:npm' cache cache "$(path:cache)/npm.zsh"
+
+    if is-callable npm; then
+      if [[ "$commands[npm]" -nt "$cache" || ! -s "$cache" ]]; then
+        npm completion >! "$cache" &> /dev/null
+      fi
+
+      source "$cache"
     fi
   }
 fi
