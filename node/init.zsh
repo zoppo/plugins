@@ -68,4 +68,23 @@ if zdefault -t ':zoppo:plugin:node:npm' enable 'yes'; then
 fi
 # }}}
 
+if zdefault -t ':zoppo:plugin:node:modules' enable 'yes'; then
+  function {
+    typeset -g NPM_PACKAGES
+    zdefault -s ':zoppo:plugin:node:modules' path NPM_PACKAGES "${HOME}/.node_modules"
+    export NPM_PACKAGES
+
+    if ! [ -d "${NPM_PACKAGES}/bin" ]; then
+      mkdir -p "${NPM_PACKAGES}/bin"
+    fi
+
+    typeset -gU path
+    path=("${NPM_PACKAGES}"/bin(/N) $path)
+
+    typeset -g NODE_PATH
+    NODE_PATH="${NPM_PACKAGES}/lib/node_modules${NODE_PATH:+:$NODE_PATH}"
+    export NODE_PATH
+  }
+fi
+
 # vim: ft=zsh sts=2 ts=2 sw=2 et fdm=marker fmr={{{,}}}
