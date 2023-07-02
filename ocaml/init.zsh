@@ -2,8 +2,9 @@ if zdefault -t ':zoppo:plugin:ocaml:opam' enable 'yes'; then
   function {
     typeset -g OPAMROOT
     if [ -z "${OPAMROOT-}" ]; then
-      zdefault -s ':zoppo:plugin:ocaml:opam' root OPAMROOT "${HOME}/.opam"
+      OPAMROOT="${HOME}/.opam"
     fi
+    zdefault -s ':zoppo:plugin:ocaml:opam' root OPAMROOT "${OPAMROOT}"
     export OPAMROOT
 
 

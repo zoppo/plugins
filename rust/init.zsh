@@ -2,8 +2,9 @@ if zdefault -t ':zoppo:plugin:rust:cargo' enable 'yes'; then
   function {
     typeset -g CARGO_HOME
     if [ -z "${CARGO_HOME-}" ]; then
-      zdefault -s ':zoppo:plugin:rust:cargo' home CARGO_HOME "${HOME}/.cargo"
+      CARGO_HOME="${HOME}/.cargo"
     fi
+    zdefault -s ':zoppo:plugin:rust:cargo' home CARGO_HOME "${CARGO_HOME}"
     export CARGO_HOME
 
     typeset -gU path
