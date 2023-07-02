@@ -9,8 +9,20 @@ if zdefault -t ':zoppo:plugin:node:nvm' enable 'no'; then
 
     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
+    if [ "$(nvm current)" = system ] && is-command npm; then
+      typeset -gU path
+      path=("$(npm config get prefix)"/bin(/N) $path)
+    fi
+
     if plugins:load-if-enabled 'completion'; then
       [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+    fi
+  }
+elif zdefault -t ':zoppo:plugin:node:npm' enable 'yes'; then
+  function {
+    if is-command npm; then
+      typeset -gU path
+      path=("$(npm config get prefix)"/bin(/N) $path)
     fi
   }
 fi
