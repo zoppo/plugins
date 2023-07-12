@@ -226,6 +226,13 @@ else
   elif is-callable xsel; then
     alias pbcopy='xsel --clipboard --input'
     alias pbpaste='xsel --clipboard --output'
+  else
+    if is-callable termux-clipboard-set; then
+      alias pbcopy='termux-clipboard-set'
+    fi
+    if is-callable termux-clipboard-get; then
+      alias pbpaste='termux-clipboard-get'
+    fi
   fi
 fi
 
