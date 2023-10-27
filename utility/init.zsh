@@ -220,19 +220,24 @@ else
   alias o='xdg-open'
   alias get='wget --continue --progress=bar --timestamping'
 
-  if is-callable xclip; then
+  if is-callable wl-copy; then
+    alias pbcopy='wl-copy'
+  elif is-callable xclip; then
     alias pbcopy='xclip -selection clipboard -in'
-    alias pbpaste='xclip -selection clipboard -out'
   elif is-callable xsel; then
     alias pbcopy='xsel --clipboard --input'
+  elif is-callable termux-clipboard-set; then
+    alias pbcopy='termux-clipboard-set'
+  fi
+
+  if is-callable wl-paste; then
+    alias pbpaste='wl-paste'
+  elif is-callable xclip; then
+    alias pbpaste='xclip -selection clipboard -out'
+  elif is-callable xsel; then
     alias pbpaste='xsel --clipboard --output'
-  else
-    if is-callable termux-clipboard-set; then
-      alias pbcopy='termux-clipboard-set'
-    fi
-    if is-callable termux-clipboard-get; then
-      alias pbpaste='termux-clipboard-get'
-    fi
+  elif is-callable termux-clipboard-get; then
+    alias pbpaste='termux-clipboard-get'
   fi
 fi
 
