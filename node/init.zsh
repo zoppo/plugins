@@ -14,15 +14,13 @@ if zdefault -t ':zoppo:plugin:node:nvm' enable 'no'; then
       . "$NVM_DIR/nvm.sh"
 
       if zdefault -t ':zoppo:plugin:node:modules' enable 'yes' && is-command npm; then
-        local prefix="$(command npm config get prefix)"
-
         if [ "$(nvm current)" = system ]; then
           typeset -gU path
           path=("$prefix"/bin(/N) $path)
         fi
 
         typeset -g NODE_PATH
-        NODE_PATH="${prefix}/lib/node_modules${NODE_PATH:+:$NODE_PATH}"
+        NODE_PATH="$(cd ~ && command npm config get prefix)/lib/node_modules${NODE_PATH:+:$NODE_PATH}"
         export NODE_PATH
 
         eval "nvm() {
@@ -31,19 +29,17 @@ if zdefault -t ':zoppo:plugin:node:nvm' enable 'no'; then
   NODE_PATH=\"\$(nvm_strip_path \"\${NODE_PATH}\" /lib/node_modules)\"
   hash -r
   if is-command npm; then
-    NODE_PATH=\"\$(command npm config get prefix)/lib/node_modules\${NODE_PATH:+:\$NODE_PATH}\"
+    NODE_PATH=\"\$(functions[nvm:loadrc]=''; cd ~ && command npm config get prefix)/lib/node_modules\${NODE_PATH:+:\$NODE_PATH}\"
   fi
   export NODE_PATH
   }"
       fi
     elif zdefault -t ':zoppo:plugin:node:modules' enable 'yes' && is-command npm; then
-      local prefix="$(command npm config get prefix)"
-
       typeset -gU path
       path=("$prefix"/bin(/N) $path)
 
       typeset -g NODE_PATH
-      NODE_PATH="${prefix}/lib/node_modules${NODE_PATH:+:$NODE_PATH}"
+      NODE_PATH="$(cd ~ && command npm config get prefix)/lib/node_modules${NODE_PATH:+:$NODE_PATH}"
       export NODE_PATH
     fi
 
@@ -51,8 +47,9 @@ if zdefault -t ':zoppo:plugin:node:nvm' enable 'no'; then
       [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
     fi
   }
+
   autoload -U add-zsh-hook
-  load-nvmrc() {
+  function nvm:loadrc {
     local node_version="$(nvm version)"
     local nvmrc_path="$(nvm_find_nvmrc)"
 
@@ -69,17 +66,15 @@ if zdefault -t ':zoppo:plugin:node:nvm' enable 'no'; then
       nvm use default
     fi
   }
-  add-zsh-hook chpwd load-nvmrc
-  load-nvmrc
+  add-zsh-hook chpwd nvm:loadrc
+  nvm:loadrc
 elif zdefault -t ':zoppo:plugin:node:modules' enable 'yes' && is-command npm; then
   function {
-    local prefix="$(command npm config get prefix)"
-
     typeset -gU path
     path=("$prefix"/bin(/N) $path)
 
     typeset -g NODE_PATH
-    NODE_PATH="${prefix}/lib/node_modules${NODE_PATH:+:$NODE_PATH}"
+    NODE_PATH="$(cd ~ && command npm config get prefix)/lib/node_modules${NODE_PATH:+:$NODE_PATH}"
     export NODE_PATH
   }
 fi
